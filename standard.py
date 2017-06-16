@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import random
+import datetime
+import json
+import os
 
 
 # 全局定义
@@ -14,6 +17,10 @@ class Define:
     help = '''- 菜菜酱还在测试中，可能发生错误或暴走，请多担待\n- 如有问题请 @菜酱 反馈'''
 
     file_path = '/Users/ICAICS/.qqbot-tmp/plugins/'
+
+    list_astro = ['摩羯座运势', '水瓶座运势', '双鱼座运势', '白羊座运势',
+                  '金牛座运势', '双子座运势', '巨蟹座运势', '狮子座运势',
+                  '处女座运势', '天秤座运势', '天蝎座运势', '射手座运势']
 
 
 def onQQMessage(bot, contact, member, content):
@@ -68,11 +75,42 @@ def handle_msg(bot, contact, member, message):
         bot.SendTo(contact, Define.help)
         return
 
+    if message in Define.list_astro:
+        # 获取指定星座运势
+        return get_fate(bot, contact, member_name, message)
+
     if message.startswith('钦点一人'):
         # 获得钦点的目的用于反馈
         return qindian(bot, contact, member_name, message.replace('钦点一人', ''))
 
-    return '收到消息'
+    return '收到消息：' + message
+
+
+def get_fate(bot, contact, member_name, message):
+
+    # 初始化日期和运势数据文件
+    date = str(datetime.date.today())
+    filename = os.path.join('.', '.qqbot-tmp', 'plugins', 'today.json')
+    fate = load_json(filename)
+
+    # 获取当天运势内容
+    fate_today = fate[date]
+
+    # 根据需要的星座返回内容
+    if fate_today is not None and len(fate_today) != 0:
+        # 获得星座编号
+        i = str(Define.list_astro.index(message))
+        # 提取对应星座运势
+        for astro in fate_today:
+            if astro['xingzuo'] == i:
+                score = '爱情：' + astro['LoveScore'] + ' 分\n' + \
+                        '工作：' + astro['JobScore'] + ' 分\n' + \
+                        '财富：' + astro['MoneyScore'] + ' 分\n' + \
+                        '健康：' + astro['HealthScore'] + ' 分'
+                return '@' + member_name + ' 今天的 ' + message + '：\n' + astro['content'] + '\n' + score
+
+    # 当天运势未更新
+    return '@' + member_name + ' 今天的 ' + message + ' 还没有更新'
 
 
 def qindian(bot, contact, member_name, message):
@@ -112,3 +150,10 @@ def readfile(filename):
                 break
         file.close()
         return contents
+
+
+def load_json(filename):
+    """ 读取 JSON 文件 """
+    file = open(filename, encoding='utf-8')
+    content = json.load(file)
+    return content

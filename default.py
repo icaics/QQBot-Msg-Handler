@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import random
+import json
 
 
 # 全局定义
@@ -72,7 +73,7 @@ def handle_msg(bot, contact, member, message):
         # 获得钦点的目的用于反馈
         return qindian(bot, contact, member_name, message.replace('钦点一人', ''))
 
-    return '收到消息'
+    return '收到消息：' + message
 
 
 def qindian(bot, contact, member_name, message):
@@ -112,3 +113,10 @@ def readfile(filename):
                 break
         file.close()
         return contents
+
+
+def load_json(filename):
+    """ 读取 JSON 文件 """
+    file = open(filename, encoding='utf-8')
+    content = json.load(file)
+    return content
