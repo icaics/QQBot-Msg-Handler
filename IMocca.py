@@ -52,24 +52,28 @@ def handle_msg(bot, contact, member, message):
 
     # 处理空消息
     if len(message) == 0:
-        return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + IMocca.group_trigger + ' 你能干什么」查看相关帮助'
+        return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + IMocca.group_trigger + ' 你能做什么」查看相关帮助'
 
-    if message == '你能干什么':
+    if message == '你能做什么':
         bot.SendTo(contact, IMocca.help)
         return
 
     if message == '生成星盘':
-        return '点击链接生成星盘：\nhttp://www.i-mocca.com/wap/astrolog/'
+        return '@' + member_name + ' 点击链接生成星盘：\nhttp://www.i-mocca.com/wap/astrolog/'
 
     if message == '星座匹配':
-        return '点击链接进行星座匹配：\nhttp://www.i-mocca.com/wap/astromatchlite/'
+        return '@' + member_name + ' 点击链接进行星座匹配：\nhttp://www.i-mocca.com/wap/astromatchlite/'
 
     if message == '星盘匹配':
-        return '点击链接进行星盘匹配：\nhttp://www.i-mocca.com/wap/astromatch/'
+        return '@' + member_name + ' 点击链接进行星盘匹配：\nhttp://www.i-mocca.com/wap/astromatch/'
 
     if message in Global.fate_astro_list:
         # 获取指定星座运势
         return Utility.getfate(bot, contact, member_name, message)
+
+    if message.startswith('roll'):
+        # ROLL
+        return Utility.roll(bot, contact, member_name, message.replace('roll', ''))
 
     if message.startswith('钦点一人'):
         # 获得钦点的目的用于反馈

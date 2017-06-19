@@ -50,9 +50,9 @@ def handle_msg(bot, contact, member, message):
 
     # 处理空消息
     if len(message) == 0:
-        return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + Default.group_trigger + ' 你能干什么」查看相关帮助'
+        return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + Default.group_trigger + ' 你能做什么」查看相关帮助'
 
-    if message == '你能干什么':
+    if message == '你能做什么':
         bot.SendTo(contact, Default.help)
         return
 

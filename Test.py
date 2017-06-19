@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from Define import Global
-from Define import Standard
-from Define import Utility
+from Define import Test
 
 
 def onQQMessage(bot, contact, member, content):
@@ -21,16 +19,16 @@ def onQQMessage(bot, contact, member, content):
     # print(group_name)
 
     # 只接收指定群消息
-    if contact.ctype == 'group' and group_name == Standard.group_name:
+    if contact.ctype == 'group' and group_name == Test.group_name:
 
         # 获得消息内容
         message = str(content)
 
         # 只处理触发器开头的消息
-        if message.startswith(Standard.group_trigger):
+        if message.startswith(Test.group_trigger):
 
             # 去掉触发器
-            message = message.replace(Standard.group_trigger, '')
+            message = message.replace(Test.group_trigger, '')
 
             # 去掉 空格 及 @ 符号
             message = message.replace(' ', '')
@@ -52,22 +50,10 @@ def handle_msg(bot, contact, member, message):
 
     # 处理空消息
     if len(message) == 0:
-        return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + Standard.group_trigger + ' 你能做什么」查看相关帮助'
+        return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + Test.group_trigger + ' 你能做什么」查看相关帮助'
 
     if message == '你能做什么':
-        bot.SendTo(contact, Standard.help)
+        bot.SendTo(contact, Test.help)
         return
-
-    if message in Global.fate_astro_list:
-        # 获取指定星座运势
-        return Utility.getfate(bot, contact, member_name, message)
-
-    if message.startswith('roll'):
-        # ROLL
-        return Utility.roll(bot, contact, member_name, message.replace('roll', ''))
-
-    if message.startswith('钦点一人'):
-        # 获得钦点的目的用于反馈
-        return Utility.qindian(bot, contact, member_name, message.replace('钦点一人', ''), Standard.group_name, Standard.group_nickname)
 
     return '收到消息：' + message
