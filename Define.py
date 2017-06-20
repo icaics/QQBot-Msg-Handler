@@ -8,7 +8,7 @@ import datetime
 
 class Global:
 
-    plug_path = '~/usr/download/qqbot'
+    plug_path = '~/.qqbot-tmp/plugins/'
 
     fate_today_path = '/usr/download/qqbot/today.json'
 
@@ -83,29 +83,30 @@ class Utility:
         try:
             # 初始化日期和运势数据文件
             date = str(datetime.date.today())
-            fate = Utility.load_json(Global.fate_today_path)
+            fate = Utility.loadjson(Global.fate_today_path)
 
             # 获取当天运势内容
-            fate_today = fate[date]
+            if fate:
+                fate_today = fate[date]
 
-            # 根据需要的星座返回内容
-            if fate_today is not None and len(fate_today) != 0:
-                # 获得星座编号
-                i = str(Global.fate_astro_list.index(message))
-                # 提取对应星座运势
-                for astro in fate_today:
-                    if astro['xingzuo'] == i:
-                        score = '爱情：' + astro['LoveScore'] + ' 分, ' + \
-                                '工作：' + astro['JobScore'] + ' 分, ' + \
-                                '财富：' + astro['MoneyScore'] + ' 分, ' + \
-                                '健康：' + astro['HealthScore'] + ' 分'
-                        return '@' + member_name + ' 今天的 ' + message + '：\n' + astro['content'] + '\n' + score
+                # 根据需要的星座返回内容
+                if fate_today is not None and len(fate_today) != 0:
+                    # 获得星座编号
+                    i = str(Global.fate_astro_list.index(message))
+                    # 提取对应星座运势
+                    for astro in fate_today:
+                        if astro['xingzuo'] == i:
+                            score = '爱情：' + astro['LoveScore'] + ' 分, ' + \
+                                    '工作：' + astro['JobScore'] + ' 分, ' + \
+                                    '财富：' + astro['MoneyScore'] + ' 分, ' + \
+                                    '健康：' + astro['HealthScore'] + ' 分'
+                            return '@' + member_name + ' 今天的 ' + message + '：\n' + astro['content'] + '\n' + score
 
             # 当天运势未更新
             return '@' + member_name + ' 今天的 ' + message + ' 还没有更新'
 
         except Exception as e:
-            print(e)
+            print('GET_FATE_E: ' + str(e))
             return '@' + member_name + ' 今天的 ' + message + ' 出现错误'
 
     @staticmethod
@@ -132,7 +133,7 @@ class Utility:
             return result
 
         except Exception as e:
-            print(e)
+            print('ROLL_E:' + str(e))
             return '@' + member_name + ' ROLL 参数错误，roll[1,100] 可得到包含 1 和 100 的随机数'
 
     @staticmethod
@@ -162,7 +163,7 @@ class Utility:
             return '@' + member_name + ' 通过 ' + group_nickname + ' 钦点了 @' + you + ' ' + message
 
         except Exception as e:
-            print(e)
+            print('QINDIAN_E: ' + str(e))
             return '@' + member_name + ' 通过 ' + group_nickname + ' 钦点失败 -1s'
 
     @staticmethod
@@ -186,11 +187,11 @@ class Utility:
                 return contents
 
         except Exception as e:
-            print(e)
+            print('READFILE_E:' + str(e))
             return None
 
     @staticmethod
-    def load_json(filename):
+    def loadjson(filename):
 
         """ 读取 JSON 文件 """
 
@@ -200,5 +201,5 @@ class Utility:
             return content
 
         except Exception as e:
-            print(e)
+            print('LOADJSON_E:' + str(e))
             return None
