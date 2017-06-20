@@ -3,6 +3,8 @@
 
 from Define import Default
 
+# from qqbot import qqbotsched
+
 
 def onQQMessage(bot, contact, member, content):
 
@@ -57,3 +59,15 @@ def handle_msg(bot, contact, member, message):
         return
 
     return '收到消息：' + message
+
+
+# @qqbotsched(hour='0', minute='0')
+# def task(bot):
+#
+#     """ 计划任务 """
+#
+#     try:
+#         group = bot.List('group', Default.group_name)[0]
+#         bot.SendTo(group, '计划任务')
+#     except Exception as e:
+#         print('QQBOT_TASK_E: ' + str(e))

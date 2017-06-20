@@ -5,6 +5,8 @@ from Define import Global
 from Define import IMocca
 from Define import Utility
 
+# from qqbot import qqbotsched
+
 
 def onQQMessage(bot, contact, member, content):
 
@@ -69,7 +71,7 @@ def handle_msg(bot, contact, member, message):
 
     if message in Global.fate_astro_list:
         # 获取指定星座运势
-        return Utility.getfate(bot, contact, member_name, message)
+        return Utility.get_fate(bot, contact, member_name, message)
 
     if message.startswith('roll'):
         # ROLL
@@ -77,6 +79,18 @@ def handle_msg(bot, contact, member, message):
 
     if message.startswith('钦点一人'):
         # 获得钦点的目的用于反馈
-        return Utility.qindian(bot, contact, member_name, message.replace('钦点一人', ''), IMocca.group_name, IMocca.group_nickname)
+        return Utility.qin_dian(bot, contact, member_name, message.replace('钦点一人', ''), IMocca.group_name, IMocca.group_nickname)
 
     return ''
+
+
+# @qqbotsched(hour='0', minute='0')
+# def task(bot):
+#
+#     """ 计划任务 """
+#
+#     try:
+#         group = bot.List('group', IMocca.group_name)[0]
+#         bot.SendTo(group, '计划任务')
+#     except Exception as e:
+#         print('QQBOT_TASK_E: ' + str(e))

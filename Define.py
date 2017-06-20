@@ -76,14 +76,14 @@ class Kalina:
 class Utility:
 
     @staticmethod
-    def getfate(bot, contact, member_name, message):
+    def get_fate(bot, contact, member_name, message):
 
         """ 读取今日运势 """
 
         try:
             # 初始化日期和运势数据文件
             date = str(datetime.date.today())
-            fate = Utility.loadjson(Global.fate_today_path)
+            fate = Utility.load_json(Global.fate_today_path)
 
             # 获取当天运势内容
             if fate:
@@ -137,7 +137,7 @@ class Utility:
             return '@' + member_name + ' ROLL 参数错误，roll[1,100] 可得到包含 1 和 100 的随机数'
 
     @staticmethod
-    def qindian(bot, contact, member_name, message, group_name, group_nickname):
+    def qin_dian(bot, contact, member_name, message, group_name, group_nickname):
 
         """ 钦点一人 """
 
@@ -167,7 +167,7 @@ class Utility:
             return '@' + member_name + ' 通过 ' + group_nickname + ' 钦点失败 -1s'
 
     @staticmethod
-    def readfile(filename):
+    def read_file(filename):
 
         """ 读取文件 """
 
@@ -191,7 +191,7 @@ class Utility:
             return None
 
     @staticmethod
-    def loadjson(filename):
+    def load_json(filename):
 
         """ 读取 JSON 文件 """
 

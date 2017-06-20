@@ -1,2 +1,3 @@
-# qqbot_msg_handler
+# QQBot-Msg-Handler
+
 Based on 'pandolia / qqbot'
