@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import KalinaCD
+
 import random
 import json
 import datetime
@@ -86,33 +88,24 @@ class Kalina:
 
     script_moe = ["指挥官，我好饿啊 ...",
                   "指挥官，用过餐点了吗",
-                  "呜嘻嘻嘻嘻嘻 ...",
                   "指挥官，你要买东西吗？要就给你便宜点也不是不行哦 ~",
                   "指挥官，所谓的奇迹啊，就要靠我纯真的魔法，和一点点钞票啦",
-                  "呵呵呵呵呵呵 ...",
                   "指挥官，今天又要买什么？都算你便宜哟！",
                   "嘻嘻嘻，又有好多小钱钱 ... 咦！指挥官你在啊！",
-                  "不着急呢，请您慢慢来吧",
-                  "Yeah！",
                   "最近物资挤压啊 ... 啊，指挥官！来得正好，现在特别算你便宜哦！",
                   "哼哼哼 ... 啊，指挥官，今天心情不错，都算你便宜点哦 ~",
-                  "哈哈哈哈哈哈！",
                   "指挥官，在这样出手阔绰，我可要着迷了呢 ... 虽然是对钞票啦 ~",
                   "指挥官，你这么大方，人家 ... 也不会给你便宜哦！",
-                  "呼呼呼 ...",
                   "其实 ... 也没有多喜欢钱啦，但是，也没出现更喜欢的东西呢",
                   "指挥官，不要忙得太过火哦，必要时请花点钱省心吧",
                   "除了这些、那些，和那边那些，基本都是进货价呢，并没有骗您哦",
-                  "哇啊！",
                   "想更了解我 ... 吗，人家要不要把私密权限也卖给您呢，可惜没有那种东西啦",
                   "美好的一天呢，是不是该花点钱，让它更美好一点呢？",
                   "诶？没钱了？真是没办法今天就特别给你打点折好了",
                   "随便聊聊也是可以的哦，看在您是老主顾的份上，破例免费一次吧",
-                  "咔哈哈哈哈哈",
                   "指挥官，要来点点心吗？",
                   "东西快堆不下了 ... 指挥官，快拿走一些吧，成本价卖你了",
                   "虽然有句名言“不要被金钱支配，要去支配金钱”，但我是不会支配您的，指挥官大人！",
-                  "诶嘿嘿嘿嘿嘿 ...",
                   "稍稍做个游戏吧，您赢了，就打赏人家一点，输了的话，就买些东西，如何呢？",
                   "指挥官！再多买一些就给你特别的惊喜哦！",
                   "我为您破例打了那么多折扣，而我对您的爱慕之心，可从来没有打折过哦",
@@ -156,63 +149,71 @@ class Utility:
             return '@' + member_name + ' 今天的 ' + message + ' 出现错误'
 
     @staticmethod
+    def kalina_can_reply(member_name):
+
+        """ 判断是否响应当前成员消息 """
+
+        # 遍历发言记录
+        for m in KalinaCD.GROUP_CD:
+            # 获得当前成员记录
+            if m['name'] == member_name:
+                # 不在限制内
+                if time.time() - m['time'] > 600:
+                    # 冷却超过 10 分钟，可以响应，更新数据
+                    m['time'] = time.time()
+                    return True
+                # 在限制内
+                return False
+
+        # 未找到当前成员，可以相应，更新数据
+        data = dict()
+        data['name'] = member_name
+        data['time'] = time.time()
+        KalinaCD.GROUP_CD.append(data)
+        return True
+
+    @staticmethod
     def gf_build(bot, contact, member_name, message):
 
         """ 少女前线 战术少女建造模拟 """
 
         try:
-
-            # 只在 22 - 23 点之间允许建造
-            if time.strftime('%H') != '22':
-                return '@' + member_name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放，请不要刷屏建造哦'
-
-            post_fix = '\n建造结果根据「IOP制造公司出货统计」推算：\nhttp://gfdb.baka.pw/statistician.html\n结果仅供参考，请指挥官珍惜资源'
-
             if message == '普建':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4442.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 430, 430, 230' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 430, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '手枪建造':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_1111.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：130, 130, 130, 130' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：130, 130, 130, 130' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '冲锋枪建造':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4412.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 430, 130, 230' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 430, 130, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '突击步枪建造':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_1442.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：130, 430, 430, 230' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：130, 430, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '步枪建造':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4142.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 130, 430, 230' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 130, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '机枪建造':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_7614.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：730, 630, 130, 430' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：730, 630, 130, 430' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建一级':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_1_3.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 1/3' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 1/3' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建二级':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_20_5.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 20/5' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 20/5' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建三级':
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_50_10.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 50/10' + \
-                       '\n时间：' + data[2] + '\n星级：' + data[0] + '\n人形：' + data[1] + post_fix
+                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 50/10' + '\n结果：' + data[1] + ' ' + data[0]
             else:
                 return '@' + member_name + '\n' + '建造姿势错误，请使用「来一发」加以下关键字进行建造：\n普建、手枪建造、冲锋枪建造\n突击步枪建造、' \
                                                   '步枪建造、机枪建造\n重建一级、重建二级、重建三级'
@@ -222,6 +223,8 @@ class Utility:
 
     @staticmethod
     def gf_build_calculate(results):
+
+        """ 少女前线 战术少女建造模拟 按几率生成结果 """
 
         # 当前已遍历总概率（低 - 高）
         rate = 0

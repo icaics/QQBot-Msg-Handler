@@ -6,6 +6,7 @@ from Define import Utility
 
 from qqbot import qqbotsched
 import random
+import time
 
 
 def onQQMessage(bot, contact, member, content):
@@ -59,6 +60,10 @@ def handle_msg(bot, contact, member, message):
     if message == '你能做什么':
         return '@' + member_name + '\n' + Kalina.help
 
+    # 以下功能需要参与发言 CD 计算
+    if not Utility.kalina_can_reply(member_name):
+        return ''
+
     if message == '卖个萌':
         return '@' + member_name + '\n' + random.sample(Kalina.script_moe, 1)[0]
 
@@ -66,6 +71,9 @@ def handle_msg(bot, contact, member, message):
         return '@' + member_name + '\n' + '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/statistician.html'
 
     if message.startswith('来一发'):
+        # 只在 22 - 23 点之间允许建造
+        if time.strftime('%H') != '22':
+            return '@' + member_name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放，请不要刷屏建造哦！'
         return Utility.gf_build(bot, contact, member_name, message.replace('来一发', ''))
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
@@ -82,10 +90,10 @@ def handle_msg(bot, contact, member, message):
     return ''
 
 
-@qqbotsched(hour='7,19')
+@qqbotsched(hour='7')
 def battery(bot):
 
-    """ 电池刷新提醒 1500, 0300 """
+    """ 电池刷新提醒 1500 , 0300 不提醒 """
 
     try:
         group = bot.List('group', Kalina.group_name)[0]
@@ -113,7 +121,8 @@ def build_open(bot):
 
     try:
         group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放到 23:00！'
-                          '\n请各位指挥官协商好，不要大量刷屏建造！\n请各位指挥官协商好，不要大量刷屏建造！\n请各位指挥官协商好，不要大量刷屏建造！')
+        bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！'
+                          '\n请各位指挥官协商好，不要大量刷屏建造！\n请各位指挥官协商好，不要大量刷屏建造！\n请各位指挥官协商好，不要大量刷屏建造！'
+                          '\n建造结果根据「IOP制造公司出货统计」推算：\nhttp://gfdb.baka.pw/statistician.html\n结果仅供参考，请指挥官珍惜资源')
     except Exception as e:
         print('QQBOT_TASK_BUILD_OPEN_E: ' + str(e))
