@@ -55,8 +55,7 @@ def handle_msg(bot, contact, member, message):
         return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + Default.group_trigger + ' 你能做什么」查看相关帮助'
 
     if message == '你能做什么':
-        bot.SendTo(contact, Default.help)
-        return
+        return '@' + member_name + '\n' + Default.help
 
     return '收到消息：' + message
 

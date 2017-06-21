@@ -57,16 +57,18 @@ def handle_msg(bot, contact, member, message):
         return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + Standard.group_trigger + ' 你能做什么」查看相关帮助'
 
     if message == '你能做什么':
-        bot.SendTo(contact, Standard.help)
-        return
+        return '@' + member_name + '\n' + Standard.help
 
     if message in Global.fate_astro_list:
         # 获取指定星座运势
         return Utility.get_fate(bot, contact, member_name, message)
 
-    if message.startswith('roll'):
+    if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
         # ROLL
-        return Utility.roll(bot, contact, member_name, message.replace('roll', ''))
+        m = message.replace('roll', '')
+        m = m.replace('Roll', '')
+        m = m.replace('ROLL', '')
+        return Utility.roll(bot, contact, member_name, m)
 
     if message.startswith('钦点一人'):
         # 获得钦点的目的用于反馈

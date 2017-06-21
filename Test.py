@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from Define import Test
+# from Define import Utility
 
-from qqbot import qqbotsched
+# from qqbot import qqbotsched
 
 
 def onQQMessage(bot, contact, member, content):
@@ -55,19 +56,18 @@ def handle_msg(bot, contact, member, message):
         return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + Test.group_trigger + ' 你能做什么」查看相关帮助'
 
     if message == '你能做什么':
-        bot.SendTo(contact, Test.help)
-        return
+        return '@' + member_name + '\n' + Test.help
 
     return '收到消息：' + message
 
 
-@qqbotsched(hour='3,15')
-def default_task(bot):
-
-    """ 计划任务 """
-
-    try:
-        group = bot.List('group', Test.group_name)[0]
-        bot.SendTo(group, '计划任务')
-    except Exception as e:
-        print('QQBOT_TASK_E: ' + str(e))
+# @qqbotsched(hour='0', minute='0')
+# def default_task(bot):
+#
+#     """ 计划任务 """
+#
+#     try:
+#         group = bot.List('group', Test.group_name)[0]
+#         bot.SendTo(group, '计划任务')
+#     except Exception as e:
+#         print('QQBOT_TASK_E: ' + str(e))
