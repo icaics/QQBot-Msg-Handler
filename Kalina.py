@@ -54,7 +54,7 @@ def handle_msg(bot, contact, member, message):
 
     # 处理空消息
     if len(message) == 0:
-        return '@' + member_name + '\n' + '指挥官！叫了人家又不说话！\n诶？还不太了解我？嘿嘿嘿\n直接发言「' + Kalina.group_trigger + ' 你能做什么」查看我能帮您做什么吧'
+        return '@' + member_name + '\n' + '指挥官！叫了人家又不说话！哼！\n诶？还不太了解我？嘿嘿嘿\n直接发言「' + Kalina.group_trigger + ' 你能做什么」查看我能帮您做什么吧'
 
     if message == '你能做什么':
         return '@' + member_name + '\n' + Kalina.help
@@ -95,7 +95,7 @@ def battery(bot):
 
 
 @qqbotsched(day_of_week='3', hour='1', minute='30')
-def battery(bot):
+def maintenance(bot):
 
     """ 例行维护时间提醒 0930 """
 
@@ -103,4 +103,17 @@ def battery(bot):
         group = bot.List('group', Kalina.group_name)[0]
         bot.SendTo(group, '各位指挥官！各位指挥官！\n还有半个小时就是例行维护的时间了，\n记得安排好后勤，同时注意模拟点数不要溢出哦！')
     except Exception as e:
-        print('QQBOT_TASK_BATTERY_E: ' + str(e))
+        print('QQBOT_TASK_MAINTENANCE_E: ' + str(e))
+
+
+@qqbotsched(hour='14')
+def build_open(bot):
+
+    """ 提醒可以开始建造模拟 """
+
+    try:
+        group = bot.List('group', Kalina.group_name)[0]
+        bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放到 23:00！'
+                          '\n请各位指挥官协商好，不要大量刷屏建造！\n请各位指挥官协商好，不要大量刷屏建造！\n请各位指挥官协商好，不要大量刷屏建造！')
+    except Exception as e:
+        print('QQBOT_TASK_BUILD_OPEN_E: ' + str(e))

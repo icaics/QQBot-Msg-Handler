@@ -4,6 +4,7 @@
 import random
 import json
 import datetime
+import time
 
 
 class Global:
@@ -70,8 +71,7 @@ class Kalina:
     group_nickname = '后勤官格林娜'
     group_trigger = '格林娜格林娜'
 
-    help = '''- 格林娜的傀儡人形还在测试中，可能发生错误或暴走，请多担待
-- 直接在群内发送「格林娜格林娜」加上以下文字使用对应功能
+    help = '''- 直接在群内发送「格林娜格林娜」加上以下文字使用对应功能
     1、卖个萌
     2、建造数据库
     3、来一发普建
@@ -81,6 +81,7 @@ class Kalina:
     7、钦点一人 ***（*** 可以是做什么）
 - 提醒各位指挥官好友电池刷新及例行维护时间
 - 以上功能和提醒可能因为心智云图问题失效
+- 请不要反复骚扰格林娜造成刷屏
 - 如有问题请 @菜菜酱 反馈'''
 
     script_moe = ["指挥官，我好饿啊 ...",
@@ -160,6 +161,11 @@ class Utility:
         """ 少女前线 战术少女建造模拟 """
 
         try:
+
+            # 只在 22 - 23 点之间允许建造
+            if time.strftime('%H') != '22':
+                return '@' + member_name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放，请不要刷屏建造哦'
+
             post_fix = '\n建造结果根据「IOP制造公司出货统计」推算：\nhttp://gfdb.baka.pw/statistician.html\n结果仅供参考，请指挥官珍惜资源'
 
             if message == '普建':
@@ -256,7 +262,7 @@ class Utility:
 
         except Exception as e:
             print('ROLL_E:' + str(e))
-            return '@' + member_name + ' ROLL 参数错误，ROLL[1-100] 可得到包含 1 和 100 的随机数'
+            return '@' + member_name + ' ROLL 出现错误，ROLL[1-100] 可得到包含 1 和 100 的随机数'
 
     @staticmethod
     def qin_dian(bot, contact, member_name, message, group_name, group_nickname):
@@ -286,7 +292,7 @@ class Utility:
 
         except Exception as e:
             print('QINDIAN_E: ' + str(e))
-            return '@' + member_name + ' 通过 ' + group_nickname + ' 钦点失败'
+            return '@' + member_name + ' 通过 ' + group_nickname + ' 钦点失败，出现错误'
 
     @staticmethod
     def read_file(filename):
