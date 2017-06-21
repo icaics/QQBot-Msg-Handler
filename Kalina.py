@@ -60,11 +60,10 @@ def handle_msg(bot, contact, member, message):
     if message == '你能做什么':
         return '@' + member_name + '\n' + Kalina.help
 
-    # 以下功能需要参与发言 CD 计算
-    if not Utility.kalina_can_reply(member_name):
-        return ''
-
     if message == '卖个萌':
+        # 此功能需要参与发言 CD 计算
+        if not Utility.kalina_can_reply(member_name):
+            return ''
         return '@' + member_name + '\n' + random.sample(Kalina.script_moe, 1)[0]
 
     if message == '建造数据库':
@@ -74,9 +73,15 @@ def handle_msg(bot, contact, member, message):
         # 只在 22 - 23 点之间允许建造
         if time.strftime('%H') != '22':
             return '@' + member_name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放，请不要刷屏建造哦！'
+        # 此功能需要参与发言 CD 计算
+        if not Utility.kalina_can_reply(member_name):
+            return ''
         return Utility.gf_build(bot, contact, member_name, message.replace('来一发', ''))
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
+        # 此功能需要参与发言 CD 计算
+        if not Utility.kalina_can_reply(member_name):
+            return ''
         # ROLL
         m = message.replace('roll', '')
         m = m.replace('Roll', '')
@@ -84,6 +89,9 @@ def handle_msg(bot, contact, member, message):
         return Utility.roll(bot, contact, member_name, m)
 
     if message.startswith('钦点一人'):
+        # 此功能需要参与发言 CD 计算
+        if not Utility.kalina_can_reply(member_name):
+            return ''
         # 获得钦点的目的用于反馈
         return Utility.qin_dian(bot, contact, member_name, message.replace('钦点一人', ''), Kalina.group_name, Kalina.group_nickname)
 
