@@ -181,7 +181,7 @@ class Utility:
             KalinaCD.QINDIAN_CD = time.time()
             return True
 
-        return True
+        return False
 
     @staticmethod
     def gf_build(bot, contact, member_name, message):
