@@ -61,9 +61,6 @@ def handle_msg(bot, contact, member, message):
         return '@' + member_name + '\n' + Kalina.help
 
     if message == '卖个萌':
-        # 此功能需要参与发言 CD 计算
-        if not Utility.kalina_can_reply(member_name):
-            return ''
         return '@' + member_name + '\n' + random.sample(Kalina.script_moe, 1)[0]
 
     if message == '建造数据库':
@@ -72,10 +69,7 @@ def handle_msg(bot, contact, member, message):
     if message.startswith('来一发'):
         # 只在 22 - 23 点之间允许建造
         if time.strftime('%H') != '22':
-            return '@' + member_name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放，请不要刷屏建造哦！'
-        # 此功能需要参与发言 CD 计算
-        if not Utility.kalina_can_reply(member_name):
-            return ''
+            return '@' + member_name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放哦'
         return Utility.gf_build(bot, contact, member_name, message.replace('来一发', ''))
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
@@ -89,9 +83,9 @@ def handle_msg(bot, contact, member, message):
         return Utility.roll(bot, contact, member_name, m)
 
     if message.startswith('钦点一人'):
-        # 此功能需要参与发言 CD 计算
-        if not Utility.kalina_can_reply(member_name):
-            return ''
+        # 此功能参与单独 CD 计算
+        if not Utility.kalina_can_qindian():
+            return '@' + member_name + '\n' + '指挥官！钦点也要按照基本法哦'
         # 获得钦点的目的用于反馈
         return Utility.qin_dian(bot, contact, member_name, message.replace('钦点一人', ''), Kalina.group_name, Kalina.group_nickname)
 
@@ -110,14 +104,14 @@ def battery(bot):
         print('QQBOT_TASK_BATTERY_E: ' + str(e))
 
 
-@qqbotsched(day_of_week='3', hour='1', minute='30')
+@qqbotsched(day_of_week='3', hour='1', minute='30,45')
 def maintenance(bot):
 
-    """ 例行维护时间提醒 0930 """
+    """ 例行维护时间提醒 """
 
     try:
         group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官！各位指挥官！\n还有半个小时就是例行维护的时间了，\n记得安排好后勤，同时注意模拟点数不要溢出哦！')
+        bot.SendTo(group, '各位指挥官！各位指挥官！\n马上 10:00 就是例行维护的时间了，\n记得安排好后勤，同时注意模拟点数不要溢出哦！')
     except Exception as e:
         print('QQBOT_TASK_MAINTENANCE_E: ' + str(e))
 
@@ -129,8 +123,7 @@ def build_open(bot):
 
     try:
         group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！'
-                          '\n请各位指挥官协商好，不要大量刷屏建造！\n请各位指挥官协商好，不要大量刷屏建造！\n请各位指挥官协商好，不要大量刷屏建造！'
+        bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n请各位指挥官协商好，不要大量刷屏建造！'
                           '\n建造结果根据「IOP制造公司出货统计」推算：\nhttp://gfdb.baka.pw/statistician.html\n结果仅供参考，请指挥官珍惜资源')
     except Exception as e:
         print('QQBOT_TASK_BUILD_OPEN_E: ' + str(e))

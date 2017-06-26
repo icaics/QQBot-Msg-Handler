@@ -2,3 +2,4 @@
 # -*- coding: utf-8 -*-
 
 GROUP_CD = list()
+QINDIAN_CD = 0
