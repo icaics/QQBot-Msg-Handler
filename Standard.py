@@ -5,6 +5,7 @@ from Define import Global
 from Define import Standard
 from Define import Utility
 
+import random
 # from qqbot import qqbotsched
 
 
@@ -69,6 +70,10 @@ def handle_msg(bot, contact, member, message):
         m = m.replace('Roll', '')
         m = m.replace('ROLL', '')
         return Utility.roll(bot, contact, member_name, m)
+
+    if message == '叫爸爸':
+        reply = ['爸爸求包养！', '爹地好！', '给父上请安了！']
+        return '@' + member_name + ' ' + random.choice(reply)
 
     if message.startswith('钦点一人'):
         # 获得钦点的目的用于反馈

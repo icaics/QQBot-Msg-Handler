@@ -144,7 +144,7 @@ class Utility:
 
         except Exception as e:
             print('GET_FATE_E: ' + str(e))
-            return '@' + member_name + ' 今天的 ' + message + ' 出现错误'
+            return '@' + member_name + ' 今天的 ' + message + ' 还没有更新'
 
     @staticmethod
     def kalina_can_reply(member_name):
