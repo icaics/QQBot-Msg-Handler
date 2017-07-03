@@ -75,6 +75,9 @@ def handle_msg(bot, contact, member, message):
         reply = ['爸爸求包养！', '爹地好！', '给父上请安了！']
         return '@' + member_name + ' ' + random.choice(reply)
 
+    if message == '叫爷爷':
+        return '@' + member_name + ' 爷爷好！'
+
     if message.startswith('钦点一人'):
         # 获得钦点的目的用于反馈
         return Utility.qin_dian(bot, contact, member_name, message.replace('钦点一人', ''), Standard.group_name, Standard.group_nickname)
