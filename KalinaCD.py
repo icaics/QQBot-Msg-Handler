@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-GROUP_CD = list()
-QINDIAN_CD = 0
+BUILD_CD = list()
+ROLL_CD = list()
+QINDIAN_CD = list()

@@ -80,10 +80,10 @@ class Kalina:
     help = '''- 直接在群内发送「格林娜格林娜」加上以下文字使用对应功能
     1、卖个萌
     2、建造数据库
-    3、来一发普建/枪种建造（CD）
-    5、来一发重建一/二/三档（CD）
-    6、ROLL（默认 1-100，CD）
-    7、钦点一人 ***（全群共享 CD）
+    3、来一发普建/枪种建造（CD 10）
+    4、来一发重建一/二/三档（CD 10）
+    5、ROLL（默认 1-100，CD 10）
+    6、钦点一人 ***（CD 30）
 - 以上功能和提醒可能因为心智云图问题失效
 - 如有问题请 @菜菜酱 反馈'''
 
@@ -150,16 +150,16 @@ class Utility:
             return '@' + member.name + ' 今天的 ' + message + ' 还没有更新'
 
     @staticmethod
-    def kalina_can_reply(member):
+    def kalina_can_reply(member, list_cd_counter, seconds):
 
         """ 判断是否响应当前成员消息 """
 
         # 遍历发言记录
-        for m in KalinaCD.GROUP_CD:
+        for m in list_cd_counter:
             # 获得当前成员记录
             if m['uin'] == member.uin:
                 # 不在限制内
-                if time.time() - m['time'] > 600:
+                if time.time() - m['time'] > seconds:
                     # 冷却超过 10 分钟，可以响应，更新数据
                     m['time'] = time.time()
                     return True
@@ -170,21 +170,9 @@ class Utility:
         data = dict()
         data['uin'] = member.uin
         data['time'] = time.time()
-        KalinaCD.GROUP_CD.append(data)
+        list_cd_counter.append(data)
+
         return True
-
-    @staticmethod
-    def kalina_can_qindian():
-
-        """ 判断是否响应当前成员钦点 """
-
-        # 获取上次钦点时间
-        if time.time() - KalinaCD.QINDIAN_CD > 600:
-            # 可以响应，更新数据
-            KalinaCD.QINDIAN_CD = time.time()
-            return True
-
-        return False
 
     @staticmethod
     def gf_build(bot, contact, member, message):
@@ -194,14 +182,14 @@ class Utility:
         try:
             if message == '普建':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4442.json')
                 data = Utility.gf_build_calculate(results)
                 return '@' + member.name + '\n指挥官！建造结果如下：\n公式：430, 430, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '手枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_1111.json')
                 # 建造
@@ -209,7 +197,7 @@ class Utility:
                 return '@' + member.name + '\n指挥官！建造结果如下：\n公式：130, 130, 130, 130' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '冲锋枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4412.json')
                 # 建造
@@ -217,7 +205,7 @@ class Utility:
                 return '@' + member.name + '\n指挥官！建造结果如下：\n公式：430, 430, 130, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '突击步枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_1442.json')
                 # 建造
@@ -225,7 +213,7 @@ class Utility:
                 return '@' + member.name + '\n指挥官！建造结果如下：\n公式：130, 430, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '步枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4142.json')
                 # 建造
@@ -233,7 +221,7 @@ class Utility:
                 return '@' + member.name + '\n指挥官！建造结果如下：\n公式：430, 130, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '机枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_7614.json')
                 # 建造
@@ -241,7 +229,7 @@ class Utility:
                 return '@' + member.name + '\n指挥官！建造结果如下：\n公式：730, 630, 130, 430' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建一级' or message == '重建一档' or message == '重建一挡':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_1_3.json')
                 # 建造
@@ -249,7 +237,7 @@ class Utility:
                 return '@' + member.name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 1/3' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建二级' or message == '重建二档' or message == '重建二挡':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_20_5.json')
                 # 建造
@@ -257,7 +245,7 @@ class Utility:
                 return '@' + member.name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 20/5' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建三级' or message == '重建三档' or message == '重建三挡':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member):
+                if not Utility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_50_10.json')
                 # 建造

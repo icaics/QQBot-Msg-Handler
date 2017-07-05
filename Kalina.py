@@ -3,6 +3,7 @@
 
 from Define import Kalina
 from Define import Utility
+import KalinaCD
 
 from qqbot import qqbotsched
 import random
@@ -72,7 +73,7 @@ def handle_msg(bot, contact, member, message):
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
         # 此功能需要参与发言 CD 计算
-        if not Utility.kalina_can_reply(member):
+        if not Utility.kalina_can_reply(member, KalinaCD.ROLL_CD, 600):
             return ''
         # ROLL
         m = message.replace('roll', '')
@@ -81,8 +82,8 @@ def handle_msg(bot, contact, member, message):
         return Utility.roll(bot, contact, member, m)
 
     if message.startswith('钦点一人'):
-        # 此功能参与单独 CD 计算
-        if not Utility.kalina_can_qindian():
+        # 此功能需要参与发言 CD 计算
+        if not Utility.kalina_can_reply(member, KalinaCD.QINDIAN_CD, 1800):
             return ''
         # 获得钦点的目的用于反馈
         return Utility.qin_dian(bot, contact, member, message.replace('钦点一人', ''), Kalina.group_name, Kalina.group_nickname)

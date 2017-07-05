@@ -5,7 +5,6 @@ from Define import Global
 from Define import Standard
 from Define import Utility
 
-import random
 # from qqbot import qqbotsched
 
 
