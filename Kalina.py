@@ -51,43 +51,41 @@ def handle_msg(bot, contact, member, message):
 
     """ 处理消息程序 """
 
-    member_name = member.name
-
     # 处理空消息
     if len(message) == 0:
-        return '@' + member_name + '\n' + '指挥官！叫了人家又不说话！哼！\n诶？还不太了解我？嘿嘿嘿\n直接发言「' + Kalina.group_trigger + ' 你能做什么」查看我能帮您做什么吧'
+        return '@' + member.name + '\n' + '指挥官！我在的！没有摸鱼哦！\n直接发言「' + Kalina.group_trigger + ' 你能做什么」查看我能帮您做什么吧'
 
     if message == '你能做什么':
-        return '@' + member_name + '\n' + Kalina.help
+        return '@' + member.name + '\n' + Kalina.help
 
     if message == '卖个萌':
-        return '@' + member_name + '\n' + random.sample(Kalina.script_moe, 1)[0]
+        return '@' + member.name + '\n' + random.sample(Kalina.script_moe, 1)[0]
 
     if message == '建造数据库':
-        return '@' + member_name + '\n' + '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/statistician.html'
+        return '@' + member.name + '\n' + '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/statistician.html'
 
     if message.startswith('来一发'):
         # 只在 22 - 23 点之间允许建造
         if time.strftime('%H') != '22':
-            return '@' + member_name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放哦'
-        return Utility.gf_build(bot, contact, member_name, message.replace('来一发', ''))
+            return '@' + member.name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放哦'
+        return Utility.gf_build(bot, contact, member, message.replace('来一发', ''))
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
         # 此功能需要参与发言 CD 计算
-        if not Utility.kalina_can_reply(member_name):
+        if not Utility.kalina_can_reply(member):
             return ''
         # ROLL
         m = message.replace('roll', '')
         m = m.replace('Roll', '')
         m = m.replace('ROLL', '')
-        return Utility.roll(bot, contact, member_name, m)
+        return Utility.roll(bot, contact, member, m)
 
     if message.startswith('钦点一人'):
         # 此功能参与单独 CD 计算
         if not Utility.kalina_can_qindian():
             return ''
         # 获得钦点的目的用于反馈
-        return Utility.qin_dian(bot, contact, member_name, message.replace('钦点一人', ''), Kalina.group_name, Kalina.group_nickname)
+        return Utility.qin_dian(bot, contact, member, message.replace('钦点一人', ''), Kalina.group_name, Kalina.group_nickname)
 
     return ''
 

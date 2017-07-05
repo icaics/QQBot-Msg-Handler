@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from Define import Test
-# from Define import Utility
+from Define import Utility
 
 # from qqbot import qqbotsched
 
@@ -58,7 +58,9 @@ def handle_msg(bot, contact, member, message):
     if message == '你能做什么':
         return '@' + member_name + '\n' + Test.help
 
-    return '收到消息：' + message
+    else:
+        # 调用 聚合数据 问答机器人 接口
+        return Utility.turing(bot, contact, member, message)
 
 
 # @qqbotsched(hour='0', minute='0')

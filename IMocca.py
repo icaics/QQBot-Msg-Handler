@@ -50,40 +50,40 @@ def handle_msg(bot, contact, member, message):
 
     """ 处理消息程序 """
 
-    member_name = member.name
-
     # 处理空消息
     if len(message) == 0:
-        return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + IMocca.group_trigger + ' 你能做什么」查看相关帮助'
+        return '@' + member.name + ' 需要我为您做什么？\n直接发言「' + IMocca.group_trigger + ' 你能做什么」查看相关帮助'
 
     if message == '你能做什么':
-        return '@' + member_name + '\n' + IMocca.help
+        return '@' + member.name + '\n' + IMocca.help
 
     if message == '生成星盘':
-        return '@' + member_name + ' 点击链接生成星盘：\nhttp://www.i-mocca.com/wap/astrolog/'
+        return '@' + member.name + ' 点击链接生成星盘：\nhttp://www.i-mocca.com/wap/astrolog/'
 
     if message == '星座匹配':
-        return '@' + member_name + ' 点击链接进行星座匹配：\nhttp://www.i-mocca.com/wap/astromatchlite/'
+        return '@' + member.name + ' 点击链接进行星座匹配：\nhttp://www.i-mocca.com/wap/astromatchlite/'
 
     if message == '星盘匹配':
-        return '@' + member_name + ' 点击链接进行星盘匹配：\nhttp://www.i-mocca.com/wap/astromatch/'
+        return '@' + member.name + ' 点击链接进行星盘匹配：\nhttp://www.i-mocca.com/wap/astromatch/'
 
     if message in Global.fate_astro_list:
         # 获取指定星座运势
-        return Utility.get_fate(bot, contact, member_name, message)
+        return Utility.get_fate(bot, contact, member, message)
 
-    if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
-        # ROLL
-        m = message.replace('roll', '')
-        m = m.replace('Roll', '')
-        m = m.replace('ROLL', '')
-        return Utility.roll(bot, contact, member_name, m)
+    # if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
+    #     # ROLL
+    #     m = message.replace('roll', '')
+    #     m = m.replace('Roll', '')
+    #     m = m.replace('ROLL', '')
+    #     return Utility.roll(bot, contact, member, m)
+    #
+    # if message.startswith('钦点一人'):
+    #     # 获得钦点的目的用于反馈
+    #     return Utility.qin_dian(bot, contact, member, message.replace('钦点一人', ''), IMocca.group_name, IMocca.group_nickname)
 
-    if message.startswith('钦点一人'):
-        # 获得钦点的目的用于反馈
-        return Utility.qin_dian(bot, contact, member_name, message.replace('钦点一人', ''), IMocca.group_name, IMocca.group_nickname)
-
-    return ''
+    else:
+        # 调用 聚合数据 问答机器人 接口
+        return Utility.turing(bot, contact, member, message)
 
 
 # @qqbotsched(hour='0', minute='0')

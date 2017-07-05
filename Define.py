@@ -7,6 +7,8 @@ import random
 import json
 import datetime
 import time
+import requests
+import urllib.parse
 
 
 class Global:
@@ -18,6 +20,8 @@ class Global:
     fate_astro_list = ['摩羯座运势', '水瓶座运势', '双鱼座运势', '白羊座运势',
                        '金牛座运势', '双子座运势', '巨蟹座运势', '狮子座运势',
                        '处女座运势', '天秤座运势', '天蝎座运势', '射手座运势']
+
+    turing_key = '41e97dbc8a92707d2a8fd29c3c443bde'
 
 
 class Default:
@@ -112,7 +116,7 @@ class Kalina:
 class Utility:
 
     @staticmethod
-    def get_fate(bot, contact, member_name, message):
+    def get_fate(bot, contact, member, message):
 
         """ 读取今日运势 """
 
@@ -136,24 +140,24 @@ class Utility:
                                     '工作：' + astro['JobScore'] + ' 分, ' + \
                                     '财富：' + astro['MoneyScore'] + ' 分, ' + \
                                     '健康：' + astro['HealthScore'] + ' 分'
-                            return '@' + member_name + ' 今天的 ' + message + '：\n' + astro['content'] + '\n' + score
+                            return '@' + member.name + ' 今天的 ' + message + '：\n' + astro['content'] + '\n' + score
 
             # 当天运势未更新
-            return '@' + member_name + ' 今天的 ' + message + ' 还没有更新'
+            return '@' + member.name + ' 今天的 ' + message + ' 还没有更新'
 
         except Exception as e:
             print('GET_FATE_E: ' + str(e))
-            return '@' + member_name + ' 今天的 ' + message + ' 还没有更新'
+            return '@' + member.name + ' 今天的 ' + message + ' 还没有更新'
 
     @staticmethod
-    def kalina_can_reply(member_name):
+    def kalina_can_reply(member):
 
         """ 判断是否响应当前成员消息 """
 
         # 遍历发言记录
         for m in KalinaCD.GROUP_CD:
             # 获得当前成员记录
-            if m['name'] == member_name:
+            if m['uin'] == member.uin:
                 # 不在限制内
                 if time.time() - m['time'] > 600:
                     # 冷却超过 10 分钟，可以响应，更新数据
@@ -164,7 +168,7 @@ class Utility:
 
         # 未找到当前成员，可以响应，更新数据
         data = dict()
-        data['name'] = member_name
+        data['uin'] = member.uin
         data['time'] = time.time()
         KalinaCD.GROUP_CD.append(data)
         return True
@@ -183,89 +187,89 @@ class Utility:
         return False
 
     @staticmethod
-    def gf_build(bot, contact, member_name, message):
+    def gf_build(bot, contact, member, message):
 
         """ 少女前线 战术少女建造模拟 """
 
         try:
             if message == '普建':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4442.json')
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 430, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：430, 430, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '手枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_1111.json')
                 # 建造
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：130, 130, 130, 130' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：130, 130, 130, 130' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '冲锋枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4412.json')
                 # 建造
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 430, 130, 230' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：430, 430, 130, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '突击步枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_1442.json')
                 # 建造
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：130, 430, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：130, 430, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '步枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4142.json')
                 # 建造
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：430, 130, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：430, 130, 430, 230' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '机枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_7614.json')
                 # 建造
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：730, 630, 130, 430' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：730, 630, 130, 430' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建一级' or message == '重建一档' or message == '重建一挡':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_1_3.json')
                 # 建造
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 1/3' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 1/3' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建二级' or message == '重建二档' or message == '重建二挡':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_20_5.json')
                 # 建造
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 20/5' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 20/5' + '\n结果：' + data[1] + ' ' + data[0]
             elif message == '重建三级' or message == '重建三档' or message == '重建三挡':
                 # 此功能需要参与发言 CD 计算
-                if not Utility.kalina_can_reply(member_name):
+                if not Utility.kalina_can_reply(member):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_50_10.json')
                 # 建造
                 data = Utility.gf_build_calculate(results)
-                return '@' + member_name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 50/10' + '\n结果：' + data[1] + ' ' + data[0]
+                return '@' + member.name + '\n指挥官！建造结果如下：\n公式：6K, 2K, 6K, 4K, 50/10' + '\n结果：' + data[1] + ' ' + data[0]
             else:
                 # 建造方式错误不再触发发言 CD
-                return '@' + member_name + '\n' + '建造姿势错误，资源大破！\n请使用「来一发」加上：\n普建、手枪建造、冲锋枪建造\n突击步枪建造、' \
+                return '@' + member.name + '\n' + '建造姿势错误，资源大破！\n请使用「来一发」加上：\n普建、手枪建造、冲锋枪建造\n突击步枪建造、' \
                                                   '步枪建造、机枪建造\n重建一档、重建二档、重建三档'
         except Exception as e:
             print('GF_BUILD_E: ' + str(e))
-            return '@' + member_name + '\n' + message + ' 出现错误，资源大破！'
+            return '@' + member.name + '\n' + message + ' 建造系统出现错误，资源大破！'
 
     @staticmethod
     def gf_build_calculate(results):
@@ -287,7 +291,7 @@ class Utility:
         return None
 
     @staticmethod
-    def roll(bot, contact, member_name, message):
+    def roll(bot, contact, member, message):
 
         """ ROLL 点 """
 
@@ -296,7 +300,7 @@ class Utility:
 
             # 如果无参数
             if len(message) == 0:
-                return '@' + member_name + ' ROLL 出 ' + str(random.randint(1, 100)) + ' 点'
+                return '@' + member.name + ' ROLL 出 ' + str(random.randint(1, 100)) + ' 点'
 
             # 去掉 []
             message = message.replace('[', '')
@@ -305,20 +309,20 @@ class Utility:
             # 分隔数组
             num = message.split('-')
 
-            result = '@' + member_name + ' ROLL 参数错误，ROLL[a-b] 可得到包含 a 和 b 之间的随机数'
+            result = '@' + member.name + ' ROLL 参数错误，ROLL[a-b] 可得到包含 a 和 b 之间的随机数'
             if len(num) == 2:
                 a = int(num[0])
                 b = int(num[1])
-                result = '@' + member_name + ' ROLL 出 ' + str(random.randint(a, b)) + ' 点'
+                result = '@' + member.name + ' ROLL 出 ' + str(random.randint(a, b)) + ' 点'
 
             return result
 
         except Exception as e:
             print('ROLL_E:' + str(e))
-            return '@' + member_name + ' ROLL 出现错误，ROLL[a-b] 可得到包含 a 和 b 的随机数'
+            return '@' + member.name + ' ROLL 出现错误，ROLL[a-b] 可得到包含 a 和 b 的随机数'
 
     @staticmethod
-    def qin_dian(bot, contact, member_name, message, group_name, group_nickname):
+    def qin_dian(bot, contact, member, message, group_name, group_nickname):
 
         """ 钦点一人 """
 
@@ -341,11 +345,39 @@ class Utility:
                 if you != group_nickname:
                     break
 
-            return '@' + member_name + ' 通过 ' + group_nickname + ' 钦点了 @' + you + ' ' + message
+            return '@' + member.name + ' 通过 ' + group_nickname + ' 钦点了 @' + you + ' ' + message
 
         except Exception as e:
             print('QINDIAN_E: ' + str(e))
-            return '@' + member_name + ' 通过 ' + group_nickname + ' 钦点失败，出现错误'
+            return '@' + member.name + ' 通过 ' + group_nickname + ' 钦点失败，出现错误'
+
+    @staticmethod
+    def turing(bot, contact, member, message):
+
+        """ 聚合数据 问答机器人接口 """
+
+        try:
+            # 限制信息 30 字符
+            if len(message) > 30:
+                return '@' + member.name + ' 发送消息不要超过 30 个文字或符号哦'
+
+            # 将信息内容发送到接口
+            url = 'http://op.juhe.cn/robot/index?info=' + urllib.parse.quote(message) + '&userid=' + str(member.uin) + '&key=' + Global.turing_key
+            response = requests.get(url)
+
+            # 处理返回结果
+            if response.status_code != 200:
+                return '@' + member.name + ' 连接第三方消息处理服务器失败'
+
+            response = json.loads(response.text)
+
+            if response['error_code'] != 0:
+                return '@' + member.name + ' 不能处理的消息，错误码：' + str(response['error_code'])
+            return '@' + member.name + ' ' + response['result']['text']
+
+        except Exception as e:
+            print('TURING_E: ' + str(e))
+            return '@' + member.name + ' 问答出现错误'
 
     @staticmethod
     def read_file(filename):

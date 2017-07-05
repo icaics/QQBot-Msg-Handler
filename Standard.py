@@ -51,38 +51,31 @@ def handle_msg(bot, contact, member, message):
 
     """ 处理消息程序 """
 
-    member_name = member.name
-
     # 处理空消息
     if len(message) == 0:
-        return '@' + member_name + ' 需要我为您做什么？\n直接发言「' + Standard.group_trigger + ' 你能做什么」查看相关帮助'
+        return '@' + member.name + ' 需要我为您做什么？\n直接发言「' + Standard.group_trigger + ' 你能做什么」查看相关帮助'
 
     if message == '你能做什么':
-        return '@' + member_name + '\n' + Standard.help
+        return '@' + member.name + '\n' + Standard.help
 
     if message in Global.fate_astro_list:
         # 获取指定星座运势
-        return Utility.get_fate(bot, contact, member_name, message)
+        return Utility.get_fate(bot, contact, member, message)
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
         # ROLL
         m = message.replace('roll', '')
         m = m.replace('Roll', '')
         m = m.replace('ROLL', '')
-        return Utility.roll(bot, contact, member_name, m)
-
-    if message == '叫爸爸':
-        reply = ['爸爸求包养！', '爹地好！', '给父上请安了！']
-        return '@' + member_name + ' ' + random.choice(reply)
-
-    if message == '叫爷爷':
-        return '@' + member_name + ' 爷爷好！'
+        return Utility.roll(bot, contact, member, m)
 
     if message.startswith('钦点一人'):
         # 获得钦点的目的用于反馈
-        return Utility.qin_dian(bot, contact, member_name, message.replace('钦点一人', ''), Standard.group_name, Standard.group_nickname)
+        return Utility.qin_dian(bot, contact, member, message.replace('钦点一人', ''), Standard.group_name, Standard.group_nickname)
 
-    return '收到消息：' + message
+    else:
+        # 调用 聚合数据 问答机器人 接口
+        return Utility.turing(bot, contact, member, message)
 
 
 # @qqbotsched(hour='0', minute='0')
