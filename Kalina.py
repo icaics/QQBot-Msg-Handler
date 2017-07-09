@@ -65,6 +65,10 @@ def handle_msg(bot, contact, member, message):
     if message == '建造数据库':
         return '@' + member.name + '\n' + '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/statistician.html'
 
+    if message.startswith('消耗经验书'):
+        m = message.replace('消耗经验书', '')
+        return Utility.gf_exp_book(bot, contact, member, m)
+
     if message.startswith('来一发'):
         # 只在 22 - 23 点之间允许建造
         if time.strftime('%H') != '22':

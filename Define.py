@@ -9,6 +9,7 @@ import datetime
 import time
 import requests
 import urllib.parse
+import math
 
 
 class Global:
@@ -77,15 +78,26 @@ class Kalina:
     group_nickname = '后勤官格林娜'
     group_trigger = '格林娜格林娜'
 
-    help = '''- 直接在群内发送「格林娜格林娜」加上以下文字使用对应功能
+    help = '''- 直接发送「格林娜格林娜」加上以下文字使用对应功能
     1、卖个萌
     2、建造数据库
-    3、来一发普建/枪种建造（CD 10）
-    4、来一发重建一/二/三档（CD 10）
-    5、ROLL（默认 1-100，CD 10）
-    6、钦点一人 ***（CD 30）
-- 以上功能和提醒可能因为心智云图问题失效
-- 如有问题请 @菜菜酱 反馈'''
+    3、消耗经验书[a-b]
+    4、来一发普建/枪种建造（CD 10）
+    5、来一发重建一/二/三档（CD 10）
+    6、ROLL（默认 1-100，CD 10）
+    7、钦点一人 ***（CD 30）
+- 以上功能和提醒可能因为心智云图问题失效'''
+
+    exp = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
+           1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
+           2100, 2200, 2300, 2400, 2500, 2600, 2800, 3100, 3400, 4200,
+           4600, 5000, 5400, 5800, 6200, 6700, 7200, 7700, 8200, 8800,
+           9300, 9900, 10500, 11100, 11800, 12500, 13100, 13900, 14600, 15400,
+           16100, 16900, 17700, 18600, 19500, 20400, 21300, 22300, 23300, 24300,
+           25300, 26300, 27400, 28500, 29600, 30800, 32000, 33200, 34400, 45100,
+           46800, 48600, 50400, 52200, 54000, 55900, 57900, 59800, 61800, 63900,
+           66000, 68100, 70300, 72600, 74800, 77100, 79500, 81900, 84300, 112600,
+           116100, 119500, 123100, 126700, 130400, 134100, 137900, 141800, 145700]
 
     script_moe = ["指挥官，我好饿啊 ...",
                   "指挥官，用过餐点了吗",
@@ -279,6 +291,47 @@ class Utility:
         return None
 
     @staticmethod
+    def gf_exp_book(bot, contact, member, message):
+
+        """ 计算等级所需经验书数量 """
+
+        try:
+            message = str(message)
+
+            # 如果无参数
+            if len(message) == 0:
+                return '@' + member.name + '\n等级参数错误，[a-b] 可计算从等级 a 到等级 b 所需的经验书数量'
+
+            # 去掉 []
+            message = message.replace('[', '')
+            message = message.replace(']', '')
+
+            # 分隔数组
+            num = message.split('-')
+
+            result = '@' + member.name + '\n等级参数错误，[a-b] 可计算从等级 a 到等级 b 所需的经验书数量'
+            if len(num) == 2:
+
+                a = int(num[0])
+                b = int(num[1])
+
+                # 排除不合法参数
+                if a < 1 or b < 2 or a > 99 or b > 100 or a >= b:
+                    return result
+
+                # 计算
+                exp = sum(Kalina.exp[a - 1:b - 1])
+                books = math.ceil(exp / 3000)
+
+                result = '@' + member.name + '\n' + '指挥官！' + str(a) + '-' + str(b) + ' 级供需要经验书 ' + str(books) + ' 本\n计算结果仅供参考哦'
+
+            return result
+
+        except Exception as e:
+            print('EXP_BOOK_E:' + str(e))
+            return '@' + member.name + '\n计算出现错误，[a-b] 可计算从等级 a 到等级 b 所需的经验书数量'
+
+    @staticmethod
     def roll(bot, contact, member, message):
 
         """ ROLL 点 """
@@ -288,7 +341,7 @@ class Utility:
 
             # 如果无参数
             if len(message) == 0:
-                return '@' + member.name + ' ROLL 出 ' + str(random.randint(1, 100)) + ' 点'
+                return '@' + member.name + '\nROLL 出 ' + str(random.randint(1, 100)) + ' 点'
 
             # 去掉 []
             message = message.replace('[', '')
@@ -297,17 +350,17 @@ class Utility:
             # 分隔数组
             num = message.split('-')
 
-            result = '@' + member.name + ' ROLL 参数错误，ROLL[a-b] 可得到包含 a 和 b 之间的随机数'
+            result = '@' + member.name + '\nROLL 参数错误，ROLL[a-b] 可得到包含 a 和 b 之间的随机数'
             if len(num) == 2:
                 a = int(num[0])
                 b = int(num[1])
-                result = '@' + member.name + ' ROLL 出 ' + str(random.randint(a, b)) + ' 点'
+                result = '@' + member.name + '\nROLL 出 ' + str(random.randint(a, b)) + ' 点'
 
             return result
 
         except Exception as e:
             print('ROLL_E:' + str(e))
-            return '@' + member.name + ' ROLL 出现错误，ROLL[a-b] 可得到包含 a 和 b 的随机数'
+            return '@' + member.name + '\nROLL 出现错误，ROLL[a-b] 可得到包含 a 和 b 的随机数'
 
     @staticmethod
     def qin_dian(bot, contact, member, message, group_name, group_nickname):
@@ -333,11 +386,11 @@ class Utility:
                 if you != group_nickname:
                     break
 
-            return '@' + member.name + ' 通过 ' + group_nickname + ' 钦点了 @' + you + ' ' + message
+            return '@' + member.name + '\n通过 ' + group_nickname + ' 钦点了\n@' + you + ' ' + message
 
         except Exception as e:
             print('QINDIAN_E: ' + str(e))
-            return '@' + member.name + ' 通过 ' + group_nickname + ' 钦点失败，出现错误'
+            return '@' + member.name + '\n通过 ' + group_nickname + '\n钦点失败，出现错误'
 
     @staticmethod
     def turing(bot, contact, member, message):
