@@ -3,6 +3,7 @@
 
 from Define import Kalina
 from Define import Utility
+from KalinaUtility import KalinaUtility
 import KalinaCD
 
 from qqbot import qqbotsched
@@ -67,17 +68,17 @@ def handle_msg(bot, contact, member, message):
 
     if message.startswith('消耗经验书'):
         m = message.replace('消耗经验书', '')
-        return Utility.gf_exp_book(bot, contact, member, m)
+        return KalinaUtility.gf_exp_book(bot, contact, member, m)
 
     if message.startswith('来一发'):
         # 只在 22 - 23 点之间允许建造
         if time.strftime('%H') != '22':
             return '@' + member.name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放哦'
-        return Utility.gf_build(bot, contact, member, message.replace('来一发', ''))
+        return KalinaUtility.gf_build(bot, contact, member, message.replace('来一发', ''))
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
         # 此功能需要参与发言 CD 计算
-        if not Utility.kalina_can_reply(member, KalinaCD.ROLL_CD, 600):
+        if not KalinaUtility.kalina_can_reply(member, KalinaCD.ROLL_CD, 600):
             return ''
         # ROLL
         m = message.replace('roll', '')
@@ -87,7 +88,7 @@ def handle_msg(bot, contact, member, message):
 
     if message.startswith('钦点一人'):
         # 此功能需要参与发言 CD 计算
-        if not Utility.kalina_can_reply(member, KalinaCD.QINDIAN_CD, 1800):
+        if not KalinaUtility.kalina_can_reply(member, KalinaCD.QINDIAN_CD, 1800):
             return ''
         # 获得钦点的目的用于反馈
         return Utility.qin_dian(bot, contact, member, message.replace('钦点一人', ''), Kalina.group_name, Kalina.group_nickname)
