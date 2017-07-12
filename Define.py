@@ -75,13 +75,12 @@ class Kalina:
     group_trigger = '格林娜格林娜'
 
     help = '''- 直接发送「格林娜格林娜」加上以下文字使用对应功能
-    1、卖个萌
-    2、建造数据库
-    3、消耗经验书[a-b]
-    4、来一发普建/枪种建造（CD 10）
-    5、来一发重建一/二/三档（CD 10）
-    6、ROLL（默认 1-100，CD 10）
-    7、钦点一人 ***（CD 30）
+    1、建造数据库
+    2、消耗经验书[a-b]
+    3、来一发普建/枪种建造（CD 10）
+    4、来一发重建一/二/三档（CD 10）
+    5、ROLL（默认 1-100，CD 10）
+    6、钦点一人 ***（CD 30）
 - 以上功能和提醒可能因为心智云图问题失效'''
 
     exp = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
@@ -212,7 +211,7 @@ class Utility:
                 if you != group_nickname:
                     break
 
-            return '@' + member.name + '\n通过 ' + group_nickname + ' 钦点了\n@' + you + ' ' + message
+            return '@' + member.name + '\n通过 ' + group_nickname + ' 钦点了\n@' + you + '\n' + message
 
         except Exception as e:
             print('QINDIAN_E: ' + str(e))

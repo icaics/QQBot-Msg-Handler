@@ -55,12 +55,6 @@ def handle_msg(bot, contact, member, message):
 
     # 处理空消息
     if len(message) == 0:
-        return '@' + member.name + '\n' + '指挥官！我在的！没有摸鱼哦！\n直接发言「' + Kalina.group_trigger + ' 你能做什么」查看我能帮您做什么吧'
-
-    if message == '你能做什么':
-        return '@' + member.name + '\n' + Kalina.help
-
-    if message == '卖个萌':
         return '@' + member.name + '\n' + random.sample(Kalina.script_moe, 1)[0]
 
     if message == '建造数据库':
@@ -93,7 +87,7 @@ def handle_msg(bot, contact, member, message):
         # 获得钦点的目的用于反馈
         return Utility.qin_dian(bot, contact, member, message.replace('钦点一人', ''), Kalina.group_name, Kalina.group_nickname)
 
-    return ''
+    return '@' + member.name + '\n' + Kalina.help
 
 
 @qqbotsched(hour='6', minute='55')
