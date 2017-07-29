@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from Define import Kalina
+from KalinaUtility import Kalina
 from Define import Utility
 from KalinaUtility import KalinaUtility
 import KalinaCD
@@ -57,20 +57,35 @@ def handle_msg(bot, contact, member, message):
     if len(message) == 0:
         return '@' + member.name + '\n' + random.sample(Kalina.script_moe, 1)[0]
 
-    if message == '建造数据库':
-        return '@' + member.name + '\n' + '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/statistician.html'
+    if message == '查看数据库':
+        return '@' + member.name + '\n' + '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/'
 
-    if message.startswith('消耗经验书'):
-        m = message.replace('消耗经验书', '')
-        return KalinaUtility.gf_exp_book(bot, contact, member, m)
+    if message.startswith('人形经验') or message.startswith('人型经验'):
+        m = message.replace('人形经验', '')
+        m = m.replace('人型经验', '')
+        return KalinaUtility.gf_exp_book(bot, contact, member, m, 0)
+
+    if message.startswith('妖精经验'):
+        m = message.replace('妖精经验', '')
+        return KalinaUtility.gf_exp_book(bot, contact, member, m, 1)
+
+    if message.endswith('妖精信息'):
+        m = message.replace('信息', '')
+        return KalinaUtility.gf_fairy_info(bot, contact, member, m)
 
     if message.startswith('来一发'):
-        # 只在 22 - 23 点之间允许建造
+        # 活动期间离线
+        if Kalina.during_event:
+            return '@' + member.name + '\n' + Kalina.during_event_tip
+        # 只在指定时间段内允许建造
         if time.strftime('%H') != '22':
             return '@' + member.name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放哦'
         return KalinaUtility.gf_build(bot, contact, member, message.replace('来一发', ''))
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
+        # 活动期间离线
+        if Kalina.during_event:
+            return '@' + member.name + '\n' + Kalina.during_event_tip
         # 此功能需要参与发言 CD 计算
         if not KalinaUtility.kalina_can_reply(member, KalinaCD.ROLL_CD, 600):
             return ''
@@ -81,12 +96,17 @@ def handle_msg(bot, contact, member, message):
         return Utility.roll(bot, contact, member, m)
 
     if message.startswith('钦点一人'):
+        # 活动期间离线
+        if Kalina.during_event:
+            return '@' + member.name + '\n' + Kalina.during_event_tip
         # 此功能需要参与发言 CD 计算
         if not KalinaUtility.kalina_can_reply(member, KalinaCD.QINDIAN_CD, 1800):
             return ''
         # 获得钦点的目的用于反馈
         return Utility.qin_dian(bot, contact, member, message.replace('钦点一人', ''), Kalina.group_name, Kalina.group_nickname)
 
+    if Kalina.during_event:
+        return '@' + member.name + '\n' + Kalina.help_event
     return '@' + member.name + '\n' + Kalina.help
 
 
@@ -114,14 +134,14 @@ def maintenance(bot):
         print('QQBOT_TASK_MAINTENANCE_E: ' + str(e))
 
 
-@qqbotsched(hour='14')
-def build_open(bot):
-
-    """ 提醒可以开始建造模拟 """
-
-    try:
-        group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n每人每次建造成功后触发 10 min CD'
-                          '\n建造结果根据「IOP制造公司出货统计」推算：\nhttp://gfdb.baka.pw/statistician.html\n结果仅供参考，请指挥官珍惜资源')
-    except Exception as e:
-        print('QQBOT_TASK_BUILD_OPEN_E: ' + str(e))
+# @qqbotsched(hour='14')
+# def build_open(bot):
+#
+#     """ 提醒可以开始建造模拟 """
+#
+#     try:
+#         group = bot.List('group', Kalina.group_name)[0]
+#         bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n每人每次建造成功后触发 10 min CD'
+#                           '\n建造结果根据「IOP制造公司出货统计」推算：\nhttp://gfdb.baka.pw/statistician.html\n结果仅供参考，请指挥官珍惜资源')
+#     except Exception as e:
+#         print('QQBOT_TASK_BUILD_OPEN_E: ' + str(e))

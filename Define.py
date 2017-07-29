@@ -30,15 +30,6 @@ class Default:
     help = '''- 机器人还在测试中，可能发生错误或暴走，请多担待\n- 如有问题请 @菜酱 反馈'''
 
 
-class Test:
-
-    group_name = 'QQBot'
-    group_nickname = '测试酱'
-    group_trigger = '测试酱测试酱'
-
-    help = '''- 机器人还在测试中，可能发生错误或暴走，请多担待\n- 如有问题请 @菜酱 反馈'''
-
-
 class Standard:
 
     group_name = '可说呢！'
@@ -66,58 +57,6 @@ class IMocca:
     4、今日运势（自行替换星座）：
         摩卡酱摩卡酱 白羊座运势
 - 更多功能正在开发中'''
-
-
-class Kalina:
-
-    group_name = '少女前线 IOS 11服 NTW-20'
-    group_nickname = '后勤官格林娜'
-    group_trigger = '格林娜格林娜'
-
-    help = '''- 直接发送「格林娜格林娜」加上以下文字使用对应功能
-    1、建造数据库
-    2、消耗经验书[a-b]
-    3、来一发普建/枪种建造（CD 10）
-    4、来一发重建一/二/三档（CD 10）
-    5、ROLL（默认 1-100，CD 10）
-    6、钦点一人 ***（CD 30）
-- 以上功能和提醒可能因为心智云图问题失效'''
-
-    exp = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
-           1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
-           2100, 2200, 2300, 2400, 2500, 2600, 2800, 3100, 3400, 4200,
-           4600, 5000, 5400, 5800, 6200, 6700, 7200, 7700, 8200, 8800,
-           9300, 9900, 10500, 11100, 11800, 12500, 13100, 13900, 14600, 15400,
-           16100, 16900, 17700, 18600, 19500, 20400, 21300, 22300, 23300, 24300,
-           25300, 26300, 27400, 28500, 29600, 30800, 32000, 33200, 34400, 45100,
-           46800, 48600, 50400, 52200, 54000, 55900, 57900, 59800, 61800, 63900,
-           66000, 68100, 70300, 72600, 74800, 77100, 79500, 81900, 84300, 112600,
-           116100, 119500, 123100, 126700, 130400, 134100, 137900, 141800, 145700]
-
-    script_moe = ["指挥官，我好饿啊 ...",
-                  "指挥官，用过餐点了吗",
-                  "指挥官，你要买东西吗？要就给你便宜点也不是不行哦 ~",
-                  "指挥官，所谓的奇迹啊，就要靠我纯真的魔法，和一点点钞票啦",
-                  "指挥官，今天又要买什么？都算你便宜哟！",
-                  "嘻嘻嘻，又有好多小钱钱 ... 咦！指挥官你在啊！",
-                  "最近物资挤压啊 ... 啊，指挥官！来得正好，现在特别算你便宜哦！",
-                  "哼哼哼 ... 啊，指挥官，今天心情不错，都算你便宜点哦 ~",
-                  "指挥官，在这样出手阔绰，我可要着迷了呢 ... 虽然是对钞票啦 ~",
-                  "指挥官，你这么大方，人家 ... 也不会给你便宜哦！",
-                  "其实 ... 也没有多喜欢钱啦，但是，也没出现更喜欢的东西呢",
-                  "指挥官，不要忙得太过火哦，必要时请花点钱省心吧",
-                  "除了这些、那些，和那边那些，基本都是进货价呢，并没有骗您哦",
-                  "想更了解我 ... 吗，人家要不要把私密权限也卖给您呢，可惜没有那种东西啦",
-                  "美好的一天呢，是不是该花点钱，让它更美好一点呢？",
-                  "诶？没钱了？真是没办法今天就特别给你打点折好了",
-                  "随便聊聊也是可以的哦，看在您是老主顾的份上，破例免费一次吧",
-                  "指挥官，要来点点心吗？",
-                  "东西快堆不下了 ... 指挥官，快拿走一些吧，成本价卖你了",
-                  "虽然有句名言“不要被金钱支配，要去支配金钱”，但我是不会支配您的，指挥官大人！",
-                  "稍稍做个游戏吧，您赢了，就打赏人家一点，输了的话，就买些东西，如何呢？",
-                  "指挥官！再多买一些就给你特别的惊喜哦！",
-                  "我为您破例打了那么多折扣，而我对您的爱慕之心，可从来没有打折过哦",
-                  "别忘了我们的特殊契约哦，金钱只是付出的一部分呢"]
 
 
 class Utility:
@@ -154,7 +93,7 @@ class Utility:
 
         except Exception as e:
             print('GET_FATE_E: ' + str(e))
-            return '@' + member.name + ' 今天的 ' + message + ' 还没有更新'
+            return '@' + member.name + ' 今天的 ' + message + ' 出现错误'
 
     @staticmethod
     def roll(bot, contact, member, message):
@@ -185,7 +124,7 @@ class Utility:
 
         except Exception as e:
             print('ROLL_E:' + str(e))
-            return '@' + member.name + '\nROLL 出现错误，ROLL[a-b] 可得到包含 a 和 b 的随机数'
+            return '@' + member.name + '\n' + 'ROLL 出现错误'
 
     @staticmethod
     def qin_dian(bot, contact, member, message, group_name, group_nickname):
@@ -203,19 +142,19 @@ class Utility:
             # print(group_members)
 
             # 尝试 10 次
-            you = '[群主]'
+            target = '[群主]'
             for i in range(10):
                 # 随机一人
-                you = random.choice(group_members)
+                target = random.choice(group_members)
                 # 是自己
-                if you != group_nickname:
+                if target != group_nickname:
                     break
 
-            return '@' + member.name + '\n通过 ' + group_nickname + ' 钦点了\n@' + you + '\n' + message
+            return '@' + member.name + '\n钦点了\n@' + target + '\n' + message
 
         except Exception as e:
             print('QINDIAN_E: ' + str(e))
-            return '@' + member.name + '\n通过 ' + group_nickname + '\n钦点失败，出现错误'
+            return '@' + member.name + '\n' + '钦点出现错误'
 
     @staticmethod
     def turing(bot, contact, member, message):
@@ -243,7 +182,7 @@ class Utility:
 
         except Exception as e:
             print('TURING_E: ' + str(e))
-            return '@' + member.name + ' 问答出现错误'
+            return '@' + member.name + '\n' + '问答出现错误'
 
     @staticmethod
     def read_file(filename):
