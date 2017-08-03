@@ -69,7 +69,7 @@ def handle_msg(bot, contact, member, message):
         m = message.replace('妖精经验', '')
         return KalinaUtility.gf_exp_book(bot, contact, member, m, 1)
 
-    if message.endswith('妖精信息'):
+    if message.endswith('妖精信息') or message.endswith('妖精'):
         m = message.replace('信息', '')
         return KalinaUtility.gf_fairy_info(bot, contact, member, m)
 
