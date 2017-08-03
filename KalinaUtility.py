@@ -25,8 +25,8 @@ class Kalina:
 
     help_event = '''- 发送「格林娜格林娜」加上以下文字使用对应功能
     1.查看数据库
-    2.人形经验[a-b]
-    3.妖精经验[a-b]
+    2.人形经验 a-b
+    3.妖精经验 a-b
     4.〇〇妖精信息
     5.活动期间离线
     6.活动期间离线
@@ -36,8 +36,8 @@ class Kalina:
 
     help = '''- 发送「格林娜格林娜」加上以下文字使用对应功能
     1.查看数据库
-    2.人形经验[a-b]
-    3.妖精经验[a-b]
+    2.人形经验 a-b
+    3.妖精经验 a-b
     4.〇〇妖精信息
     5.来一发普建/枪种建造 (10)
     6.来一发重建〇档 (10)
@@ -265,7 +265,7 @@ class KalinaUtility:
 
             # 如果无参数
             if len(message) == 0:
-                return '@' + member.name + '\n' + '指挥官！等级参数错误，[a-b] 可计算从等级 a 到等级 b 所需的经验书数量'
+                return '@' + member.name + '\n' + '指挥官！等级参数错误，a-b 可计算从等级 a 到等级 b 所需的经验书数量'
 
             # 去掉 []
             message = message.replace('[', '')
@@ -274,7 +274,7 @@ class KalinaUtility:
             # 分隔数组
             num = message.split('-')
 
-            result = '@' + member.name + '\n' + '指挥官！等级参数错误，[a-b] 可计算从等级 a 到等级 b 所需的经验书数量'
+            result = '@' + member.name + '\n' + '指挥官！等级参数错误，a-b 可计算从等级 a 到等级 b 所需的经验书数量'
             if len(num) == 2:
 
                 a = int(num[0])
@@ -308,11 +308,23 @@ class KalinaUtility:
             result = '@' + member.name + '\n' + '指挥官！未找到指定妖精信息...'
             for fairy in Kalina.fairy_info:
 
-                # 返回对应妖精信息
+                # 返回对应妖精信息 0 %
                 if message == fairy[0]:
                     result = '@' + member.name + '\n' + '指挥官！' + message + ' 信息如下：' + \
-                             '\n建造时间：' + fairy[1] + '\n类型：' + fairy[2] + '\n伤害加成：' + fairy[3] + '\n命中加成：' + fairy[4] + \
-                             '\n闪避加成：' + fairy[5] + '\n装甲加成：' + fairy[6] + '\n暴伤加成：' + fairy[7] + '\nCD 回合：' + fairy[8]
+                             '\n建造时间：' + fairy[1] + '\n类型：' + fairy[2]
+                    # 根据是否有加成 组成信息
+                    if fairy[3] != '0 %':
+                        result += '\n伤害加成：' + fairy[3]
+                    if fairy[4] != '0 %':
+                        result += '\n命中加成：' + fairy[4]
+                    if fairy[5] != '0 %':
+                        result += '\n闪避加成：' + fairy[5]
+                    if fairy[6] != '0 %':
+                        result += '\n装甲加成：' + fairy[6]
+                    if fairy[7] != '0 %':
+                        result += '\n暴伤加成：' + fairy[7]
+                    # 添加 CD 回合信息
+                    result += '\n主要技能 CD 回合：' + fairy[8]
 
             return result
 
