@@ -221,3 +221,20 @@ class Utility:
         except Exception as e:
             print('LOADJSON_E:' + str(e))
             return None
+
+    @staticmethod
+    def save_file(filename, content, save_type):
+
+        """ 保存文件 """
+
+        if len(content) == 0:
+            return
+
+        try:
+            with open(filename, save_type) as file:
+                file.write(content)
+                file.flush()
+                file.close()
+
+        except Exception as e:
+            print('SAVEFILE_E:' + str(e))

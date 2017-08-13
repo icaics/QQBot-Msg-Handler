@@ -4,6 +4,7 @@
 from KalinaUtility import Kalina
 from Define import Utility
 from KalinaUtility import KalinaUtility
+from KalinaWBMonitor import WeiboMonitor
 import KalinaCD
 
 from qqbot import qqbotsched
@@ -132,6 +133,25 @@ def maintenance(bot):
         bot.SendTo(group, '各位指挥官！各位指挥官！\n10:00 就是例行维护的时间了，\n记得安排好后勤，同时注意模拟点数不要溢出哦！')
     except Exception as e:
         print('QQBOT_TASK_MAINTENANCE_E: ' + str(e))
+
+
+@qqbotsched(day_of_week='0-4', hour='4-12', minute='0,15,30,45')
+def weibo_monitor(bot):
+
+    """ 官方微博监控 1200-2000 每 15 分钟一次"""
+
+    try:
+        w = WeiboMonitor()
+        w.get_record()
+        w.login()
+        w.get_list_url()
+
+        wb_content = w.get_content()
+
+        group = bot.List('group', Kalina.group_name)[0]
+        bot.SendTo(group, '各位指挥官！官方微博有新的动态：\n' + wb_content)
+    except Exception as e:
+        print('QQBOT_TASK_WB_MONITOR_E: ' + str(e))
 
 
 # @qqbotsched(hour='14')
