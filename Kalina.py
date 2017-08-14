@@ -148,8 +148,10 @@ def weibo_monitor(bot):
 
         wb_content = w.get_content()
 
-        group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官！官方微博有新的动态：\n' + wb_content)
+        if len(wb_content) > 0:
+            group = bot.List('group', Kalina.group_name)[0]
+            bot.SendTo(group, '各位指挥官！官方微博有新的动态：\n' + wb_content)
+
     except Exception as e:
         print('QQBOT_TASK_WB_MONITOR_E: ' + str(e))
 
