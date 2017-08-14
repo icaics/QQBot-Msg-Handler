@@ -64,7 +64,7 @@ class WeiboMonitor:
             if r.status_code == 200 and json.loads(r.text)['retcode'] == 20000000:
                 print('MONITOR_LOGIN_OK USER_ID: ' + json.loads(r.text)['data']['uid'])
         except Exception as e:
-            print('MONITOR_LOGIN_E:' + str(e))
+            print('[ERROR] GF_MONITOR_LOGIN:' + str(e))
             return
 
     def get_list_url(self):
@@ -83,7 +83,7 @@ class WeiboMonitor:
             self.userInfo = self.userInfo + container_id
 
         except Exception as e:
-            print('MONITOR_GET_CONTAINER_ID_E:' + str(e))
+            print('[ERROR] GF_MONITOR_GET_CONTAINER_ID:' + str(e))
             return
 
     def get_content(self):
@@ -128,8 +128,9 @@ class WeiboMonitor:
 
                     return text
 
+            print('[INFO] GF_MONITOR_NO_NEW_WB')
             return ''
 
         except Exception as e:
-            print('MONITOR_GET_CONTENT_E:' + str(e))
+            print('[ERROR] GF_MONITOR_GET_CONTENT:' + str(e))
             return

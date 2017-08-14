@@ -230,7 +230,7 @@ class KalinaUtility:
                 return '@' + member.name + '\n' + '指挥官！建造姿势错误，资源大破！\n请使用「来一发」加上：\n普建、手枪建造、冲锋枪建造\n突击步枪建造、' \
                                                   '步枪建造、机枪建造\n重建一档、重建二档、重建三档'
         except Exception as e:
-            print('GF_BUILD_E: ' + str(e))
+            print('[ERROR] GF_BUILD: ' + str(e))
             return '@' + member.name + '\n' + '人形建造模拟出现错误'
 
     @staticmethod
@@ -294,7 +294,7 @@ class KalinaUtility:
             return result
 
         except Exception as e:
-            print('EXP_BOOK_E:' + str(e))
+            print('[ERROR] GF_EXP_BOOK:' + str(e))
             return '@' + member.name + '\n' + '计算经验书消耗出现错误'
 
     @staticmethod
@@ -329,5 +329,5 @@ class KalinaUtility:
             return result
 
         except Exception as e:
-            print('FAIRY_INFO_E:' + str(e))
+            print('[ERROR] GF_FAIRY_INFO:' + str(e))
             return '@' + member.name + '\n' + '查询妖精信息出现错误'

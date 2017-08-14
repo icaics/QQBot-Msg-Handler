@@ -92,7 +92,7 @@ class Utility:
             return '@' + member.name + ' 今天的 ' + message + ' 还没有更新'
 
         except Exception as e:
-            print('GET_FATE_E: ' + str(e))
+            print('[ERROR] GET_FATE: ' + str(e))
             return '@' + member.name + ' 今天的 ' + message + ' 出现错误'
 
     @staticmethod
@@ -123,7 +123,7 @@ class Utility:
             return result
 
         except Exception as e:
-            print('ROLL_E:' + str(e))
+            print('[ERROR] ROLL:' + str(e))
             return '@' + member.name + '\n' + 'ROLL 出现错误'
 
     @staticmethod
@@ -153,7 +153,7 @@ class Utility:
             return '@' + member.name + '\n钦点了\n@' + target + '\n' + message
 
         except Exception as e:
-            print('QINDIAN_E: ' + str(e))
+            print('[ERROR] QINDIAN: ' + str(e))
             return '@' + member.name + '\n' + '钦点出现错误'
 
     @staticmethod
@@ -181,7 +181,7 @@ class Utility:
             return '@' + member.name + ' ' + response['result']['text']
 
         except Exception as e:
-            print('TURING_E: ' + str(e))
+            print('[ERROR] TURING: ' + str(e))
             return '@' + member.name + '\n' + '问答出现错误'
 
     @staticmethod
@@ -205,7 +205,7 @@ class Utility:
                 return contents
 
         except Exception as e:
-            print('READFILE_E:' + str(e))
+            print('[ERROR] READFILE:' + str(e))
             return None
 
     @staticmethod
@@ -219,7 +219,7 @@ class Utility:
             return content
 
         except Exception as e:
-            print('LOADJSON_E:' + str(e))
+            print('[ERROR] LOADJSON:' + str(e))
             return None
 
     @staticmethod
@@ -237,4 +237,4 @@ class Utility:
                 file.close()
 
         except Exception as e:
-            print('SAVEFILE_E:' + str(e))
+            print('[ERROR] SAVEFILE:' + str(e))
