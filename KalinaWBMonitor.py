@@ -6,6 +6,7 @@ import json
 import re
 
 from Define import Utility
+from Define import Global
 
 
 class WeiboMonitor:
@@ -26,7 +27,7 @@ class WeiboMonitor:
         self.userIndex = 'https://m.weibo.cn/api/container/getIndex?uid=%s&type=uid&value=%s' % (self.targetID, self.targetID)
         self.userInfo = 'https://m.weibo.cn/api/container/getIndex?uid=%s&type=uid&value=%s&containerid=' % (self.targetID, self.targetID)
 
-        self.recordFilename = 'gf_weibo_records'
+        self.recordFilename = Global.database_path + 'gf_weibo_records'
 
         self.records = list()
 
