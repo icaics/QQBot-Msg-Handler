@@ -135,10 +135,10 @@ def maintenance(bot):
         print('[ERROR] GF_TASK_MAINTENANCE: ' + str(e))
 
 
-@qqbotsched(day_of_week='0-4', hour='5-11', minute='0,15,30,45')
+@qqbotsched(day_of_week='0-4', hour='5-11', minute='5,20,35,50')
 def weibo_monitor(bot):
 
-    """ 官方微博监控 13:00-19:45 每 15 分钟一次"""
+    """ 官方微博监控 13:05-19:50 每 15 分钟一次"""
 
     try:
         w = WeiboMonitor()
@@ -156,14 +156,14 @@ def weibo_monitor(bot):
         print('[ERROR] GF_TASK_WB_MONITOR: ' + str(e))
 
 
-# @qqbotsched(hour='14')
-# def build_open(bot):
-#
-#     """ 提醒可以开始建造模拟 """
-#
-#     try:
-#         group = bot.List('group', Kalina.group_name)[0]
-#         bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n每人每次建造成功后触发 10 min CD'
-#                           '\n建造结果根据「IOP制造公司出货统计」推算：\nhttp://gfdb.baka.pw/statistician.html\n结果仅供参考，请指挥官珍惜资源')
-#     except Exception as e:
-#         print('[ERROR] QQBOT_TASK_BUILD_OPEN: ' + str(e))
+@qqbotsched(hour='14')
+def build_open(bot):
+
+    """ 提醒可以开始建造模拟 """
+
+    try:
+        group = bot.List('group', Kalina.group_name)[0]
+        bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n每人每次建造成功后触发 10 min CD'
+                          '\n建造结果根据「IOP制造公司出货统计」推算：\nhttp://gfdb.baka.pw/statistician.html\n结果仅供参考，请指挥官珍惜资源')
+    except Exception as e:
+        print('[ERROR] QQBOT_TASK_BUILD_OPEN: ' + str(e))
