@@ -232,7 +232,7 @@ class KalinaUtility:
                 results = Utility.load_json(Global.database_path + 'gf_b_e_2221_1.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 1' + '\n建造结果：' + data[0] + ' ' + data[1]
+                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 1/2' + '\n建造结果：' + data[0] + ' ' + data[1]
 
             elif message == '装备重建二级' or message == '装备重建二档' or message == '装备重建二挡':
                 # 此功能需要参与发言 CD 计算
@@ -241,7 +241,7 @@ class KalinaUtility:
                 results = Utility.load_json(Global.database_path + 'gf_b_e_2221_2.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 2' + '\n建造结果：' + data[0] + ' ' + data[1]
+                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 20/4' + '\n建造结果：' + data[0] + ' ' + data[1]
 
             elif message == '装备重建三级' or message == '装备重建三档' or message == '装备重建三挡':
                 # 此功能需要参与发言 CD 计算
@@ -250,7 +250,7 @@ class KalinaUtility:
                 results = Utility.load_json(Global.database_path + 'gf_b_e_2221_3.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 3' + '\n建造结果：' + data[0] + ' ' + data[1]
+                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 50/6' + '\n建造结果：' + data[0] + ' ' + data[1]
 
             else:
                 # 建造方式错误不触发发言 CD
