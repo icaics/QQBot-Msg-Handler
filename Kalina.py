@@ -72,6 +72,7 @@ def handle_msg(bot, contact, member, message):
 
     if message.endswith('妖精信息') or message.endswith('妖精'):
         m = message.replace('信息', '')
+        m = m[-4:]
         return KalinaUtility.gf_fairy_info(bot, contact, member, m)
 
     if message.startswith('来一发'):
