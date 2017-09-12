@@ -32,7 +32,11 @@ def onQQMessage(bot, contact, member, content):
         # 获得消息内容
         message = str(content)
 
-        # 只处理触发器开头的消息
+        # 过滤空消息
+        if len(message) == 0:
+            return
+
+        # 处理触发器开头的消息
         if message.startswith(Kalina.group_trigger):
 
             # 去掉触发器
@@ -48,6 +52,28 @@ def onQQMessage(bot, contact, member, content):
             # 消息非空则回复
             if len(result) > 0:
                 bot.SendTo(contact, result)
+
+            return
+
+        # 其他消息处理复读机
+        if message == KalinaCD.LAST_MESSAGE:
+
+            # 与上一条消息相同
+            KalinaCD.LAST_REPEAT_COUNTER += 1
+
+            # 超过 5 次视为复读
+            if KalinaCD.LAST_REPEAT_COUNTER > 5:
+
+                # 重置计数器，发送消息
+                KalinaCD.LAST_REPEAT_COUNTER = 0
+                bot.SendTo(contact, KalinaCD.LAST_MESSAGE)
+
+            return
+
+        # 重置计数器
+        KalinaCD.LAST_REPEAT_COUNTER = 0
+        # 更新上一条消息
+        KalinaCD.LAST_MESSAGE = message
 
 
 def handle_msg(bot, contact, member, message):
@@ -72,6 +98,7 @@ def handle_msg(bot, contact, member, message):
 
     if message.endswith('妖精信息') or message.endswith('妖精'):
         m = message.replace('信息', '')
+        # 仅处理只含妖精名称的信息
         if len(m) == 4:
             return KalinaUtility.gf_fairy_info(bot, contact, member, m)
 
