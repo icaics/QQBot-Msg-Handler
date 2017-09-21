@@ -55,6 +55,23 @@ def onQQMessage(bot, contact, member, content):
 
             return
 
+        # 处理欢迎新人复读
+        msg = message.replace(' ', '')
+        if KalinaCD.WELCOME_COUNTER == 0 and (msg == '欢迎新大佬' or msg == '欢迎新dalao'):
+
+            # 发出欢迎信息并开启计数器
+            KalinaCD.WELCOME_COUNTER += 1
+            bot.SendTo(contact, '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下狗牌也可以哦')
+
+        # 重置欢迎计数器
+        if KalinaCD.WELCOME_COUNTER != 0 and KalinaCD.WELCOME_COUNTER != 1:
+            KalinaCD.WELCOME_COUNTER += 1
+
+            # 50 条消息后可以再次欢迎
+            if KalinaCD.WELCOME_COUNTER >= 50:
+                KalinaCD.WELCOME_COUNTER = 0
+
+        '''
         # 其他消息处理复读机
         if message == KalinaCD.LAST_MESSAGE:
 
@@ -70,10 +87,11 @@ def onQQMessage(bot, contact, member, content):
 
             return
 
-        # 重置计数器
+        # 重置复读计数器
         KalinaCD.LAST_REPEAT_COUNTER = 0
         # 更新上一条消息
         KalinaCD.LAST_MESSAGE = message
+        '''
 
 
 def handle_msg(bot, contact, member, message):
