@@ -64,7 +64,7 @@ def onQQMessage(bot, contact, member, content):
             bot.SendTo(contact, '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下狗牌也可以哦')
 
         # 重置欢迎计数器
-        if KalinaCD.WELCOME_COUNTER != 0 and KalinaCD.WELCOME_COUNTER != 1:
+        if KalinaCD.WELCOME_COUNTER != 0:
             KalinaCD.WELCOME_COUNTER += 1
 
             # 50 条消息后可以再次欢迎
