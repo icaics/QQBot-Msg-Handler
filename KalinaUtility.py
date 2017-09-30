@@ -147,7 +147,7 @@ class KalinaUtility:
         try:
             if message == '普建':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4442.json')
                 data = KalinaUtility.gf_build_calculate(results)
@@ -155,7 +155,7 @@ class KalinaUtility:
 
             elif message == '手枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_1111.json')
                 # 建造
@@ -164,7 +164,7 @@ class KalinaUtility:
 
             elif message == '冲锋枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4412.json')
                 # 建造
@@ -173,7 +173,7 @@ class KalinaUtility:
 
             elif message == '突击步枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_1442.json')
                 # 建造
@@ -182,7 +182,7 @@ class KalinaUtility:
 
             elif message == '步枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_4142.json')
                 # 建造
@@ -191,7 +191,7 @@ class KalinaUtility:
 
             elif message == '机枪建造':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_7614.json')
                 # 建造
@@ -200,7 +200,7 @@ class KalinaUtility:
 
             elif message == '重建一级' or message == '重建一档' or message == '重建一挡' or message == '人形重建一级' or message == '人形重建一档' or message == '人形重建一挡':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_1_3.json')
                 # 建造
@@ -209,7 +209,7 @@ class KalinaUtility:
 
             elif message == '重建二级' or message == '重建二档' or message == '重建二挡' or message == '人形重建二级' or message == '人形重建二档' or message == '人形重建二挡':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_20_5.json')
                 # 建造
@@ -218,7 +218,7 @@ class KalinaUtility:
 
             elif message == '重建三级' or message == '重建三档' or message == '重建三挡' or message == '人形重建三级' or message == '人形重建三档' or message == '人形重建三挡':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_c_6264_50_10.json')
                 # 建造
@@ -227,7 +227,7 @@ class KalinaUtility:
 
             elif message == '装备重建一级' or message == '装备重建一档' or message == '装备重建一挡':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_e_2221_1.json')
                 # 建造
@@ -236,7 +236,7 @@ class KalinaUtility:
 
             elif message == '装备重建二级' or message == '装备重建二档' or message == '装备重建二挡':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_e_2221_2.json')
                 # 建造
@@ -245,7 +245,7 @@ class KalinaUtility:
 
             elif message == '装备重建三级' or message == '装备重建三档' or message == '装备重建三挡':
                 # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_CD, 600):
+                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
                     return ''
                 results = Utility.load_json(Global.database_path + 'gf_b_e_2221_3.json')
                 # 建造
