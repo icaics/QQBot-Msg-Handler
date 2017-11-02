@@ -71,7 +71,6 @@ def onQQMessage(bot, contact, member, content):
             if KalinaCD.WELCOME_COUNTER >= 50:
                 KalinaCD.WELCOME_COUNTER = 0
 
-        '''
         # 其他消息处理复读机
         if message == KalinaCD.LAST_MESSAGE:
 
@@ -91,7 +90,6 @@ def onQQMessage(bot, contact, member, content):
         KalinaCD.LAST_REPEAT_COUNTER = 0
         # 更新上一条消息
         KalinaCD.LAST_MESSAGE = message
-        '''
 
 
 def handle_msg(bot, contact, member, message):
