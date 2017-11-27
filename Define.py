@@ -10,9 +10,9 @@ import urllib.parse
 
 class Global:
 
-    plug_path = '~/.qqbot-tmp/plugins/'
+    plug_path = '/app/qqbot/'
 
-    database_path = '/usr/download/qqbot/'
+    database_path = '/app/qqbot/'
 
     fate_astro_list = ['摩羯座运势', '水瓶座运势', '双鱼座运势', '白羊座运势',
                        '金牛座运势', '双子座运势', '巨蟹座运势', '狮子座运势',

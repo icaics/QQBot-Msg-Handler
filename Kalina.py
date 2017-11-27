@@ -61,7 +61,7 @@ def onQQMessage(bot, contact, member, content):
 
             # 发出欢迎信息并开启计数器
             KalinaCD.WELCOME_COUNTER += 1
-            bot.SendTo(contact, '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下狗牌也可以哦')
+            bot.SendTo(contact, '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下 "狗牌" 也可以哦')
 
         # 重置欢迎计数器
         if KalinaCD.WELCOME_COUNTER != 0:
@@ -77,11 +77,11 @@ def onQQMessage(bot, contact, member, content):
             # 与上一条消息相同
             KalinaCD.LAST_REPEAT_COUNTER += 1
 
-            # 超过 5 次视为复读
-            if KalinaCD.LAST_REPEAT_COUNTER > 5:
+            # 重复 3 次视为复读
+            if KalinaCD.LAST_REPEAT_COUNTER >= 3:
 
                 # 重置计数器，发送消息
-                KalinaCD.LAST_REPEAT_COUNTER = 0
+                KalinaCD.LAST_REPEAT_COUNTER = -20
                 bot.SendTo(contact, KalinaCD.LAST_MESSAGE)
 
             return
@@ -155,6 +155,18 @@ def handle_msg(bot, contact, member, message):
     return '@' + member.name + '\n' + Kalina.help
 
 
+@qqbotsched(hour='0', minute='0')
+def morning_call(bot):
+
+    """ 每天早上问候语 """
+
+    try:
+        group = bot.List('group', Kalina.group_name)[0]
+        bot.SendTo(group, '各位指挥官早上好！\n格林娜可没有摸鱼哦~\n新的一天一起努力吧！')
+    except Exception as e:
+        print('[ERROR] GF_TASK_MORNING_CALL: ' + str(e))
+
+
 @qqbotsched(hour='6', minute='55')
 def battery(bot):
 
@@ -180,7 +192,7 @@ def maintenance(bot):
 
 
 @qqbotsched(day_of_week='0-4', hour='5-11', minute='5,20,35,50')
-def weibo_monitor(bot):
+def weibo_monitor_weekday(bot):
 
     """ 官方微博监控 13:05-19:50 每 15 分钟一次 """
 
@@ -201,7 +213,7 @@ def weibo_monitor(bot):
 
 
 @qqbotsched(day_of_week='5-6', hour='11', minute='0')
-def weibo_monitor(bot):
+def weibo_monitor_weekend(bot):
 
     """ 官方微博监控 周六日 19:00 """
 
