@@ -78,7 +78,7 @@ def onQQMessage(bot, contact, member, content):
             KalinaCD.LAST_REPEAT_COUNTER += 1
 
             # 重复 3 次视为复读
-            if KalinaCD.LAST_REPEAT_COUNTER >= 3:
+            if KalinaCD.LAST_REPEAT_COUNTER >= 2:
 
                 # 重置计数器，发送消息
                 KalinaCD.LAST_REPEAT_COUNTER = -20
