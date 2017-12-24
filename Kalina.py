@@ -4,7 +4,7 @@
 from KalinaUtility import Kalina
 from Define import Utility
 from KalinaUtility import KalinaUtility
-from KalinaWBMonitor import WeiboMonitor
+# from KalinaWBMonitor import WeiboMonitor
 import KalinaCD
 
 from qqbot import qqbotsched
