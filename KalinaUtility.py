@@ -15,7 +15,7 @@ class Kalina:
     during_event = False
     during_event_tip = '指挥官！活动期间功能离线，请专心攻略活动'
 
-    build_up = True
+    build_up = False
 
     group_name = '少女前线-水果茶水间'
     group_nickname = '后勤官格林娜'
@@ -270,7 +270,7 @@ class KalinaUtility:
         # 当前已遍历总概率（低 - 高）
         rate = 0
         # 随机本次建造概率
-        rand = random.randint(0, 100000)
+        rand = random.randint(0, 99000)
 
         # 遍历建造几率数据库
         for data in results:
