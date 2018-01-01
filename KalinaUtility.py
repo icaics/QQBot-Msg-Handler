@@ -15,6 +15,8 @@ class Kalina:
     during_event = False
     during_event_tip = '指挥官！活动期间功能离线，请专心攻略活动'
 
+    build_up = True
+
     group_name = '少女前线-水果茶水间'
     group_nickname = '后勤官格林娜'
     group_trigger = '格林娜格林娜'
@@ -202,7 +204,7 @@ class KalinaUtility:
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_6264_1_3.json')
+                results = Utility.load_json(KalinaUtility.get_datebase_path() + 'gf_b_c_6264_1.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
                 return '@' + member.name + '\n' + '使用公式：6K, 2K, 6K, 4K, 1/3' + '\n建造结果：' + data[0] + ' ' + data[1]
@@ -211,7 +213,7 @@ class KalinaUtility:
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_6264_20_5.json')
+                results = Utility.load_json(KalinaUtility.get_datebase_path() + 'gf_b_c_6264_2.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
                 return '@' + member.name + '\n' + '使用公式：6K, 2K, 6K, 4K, 20/5' + '\n建造结果：' + data[0] + ' ' + data[1]
@@ -220,7 +222,7 @@ class KalinaUtility:
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_6264_50_10.json')
+                results = Utility.load_json(KalinaUtility.get_datebase_path() + 'gf_b_c_6264_3.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
                 return '@' + member.name + '\n' + '使用公式：6K, 2K, 6K, 4K, 50/10' + '\n建造结果：' + data[0] + ' ' + data[1]
@@ -229,28 +231,28 @@ class KalinaUtility:
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
                     return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_e_2221_1.json')
+                results = Utility.load_json(Global.database_path + 'gf_b_e_2222_1.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 1/2' + '\n建造结果：' + data[0] + ' ' + data[1]
+                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 2K5, 1/2' + '\n建造结果：' + data[0] + ' ' + data[1]
 
             elif message == '装备重建二级' or message == '装备重建二档' or message == '装备重建二挡':
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
                     return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_e_2221_2.json')
+                results = Utility.load_json(Global.database_path + 'gf_b_e_2222_2.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 20/4' + '\n建造结果：' + data[0] + ' ' + data[1]
+                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 2K5, 20/4' + '\n建造结果：' + data[0] + ' ' + data[1]
 
             elif message == '装备重建三级' or message == '装备重建三档' or message == '装备重建三挡':
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
                     return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_e_2221_3.json')
+                results = Utility.load_json(Global.database_path + 'gf_b_e_2222_3.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 1K5, 50/6' + '\n建造结果：' + data[0] + ' ' + data[1]
+                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 2K5, 50/6' + '\n建造结果：' + data[0] + ' ' + data[1]
 
             else:
                 # 建造方式错误不触发发言 CD
@@ -358,3 +360,13 @@ class KalinaUtility:
         except Exception as e:
             print('[ERROR] GF_FAIRY_INFO:' + str(e))
             return '@' + member.name + '\n' + '查询妖精信息出现错误'
+
+    @staticmethod
+    def get_datebase_path():
+
+        """ 仅人形重建三个档位参与建造 UP """
+
+        if Kalina.build_up:
+            return Global.database_path + 'up_data/'
+        else:
+            return Global.database_path + 'normal_data/'
