@@ -12,7 +12,8 @@ class Global:
 
     plug_path = '/app/qqbot/'
 
-    database_path = '/app/qqbot/'
+    database_path = '/app/qqbot/normal_data'
+    database_up_path = '/app/qqbot/up_data'
 
     fate_astro_list = ['摩羯座运势', '水瓶座运势', '双鱼座运势', '白羊座运势',
                        '金牛座运势', '双子座运势', '巨蟹座运势', '狮子座运势',

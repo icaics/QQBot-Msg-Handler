@@ -367,6 +367,6 @@ class KalinaUtility:
         """ 仅人形重建三个档位参与建造 UP """
 
         if Kalina.build_up:
-            return Global.database_path + 'up_data/'
+            return Global.database_up_path
         else:
-            return Global.database_path + 'normal_data/'
+            return Global.database_path
