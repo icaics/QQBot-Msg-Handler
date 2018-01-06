@@ -124,7 +124,7 @@ class KalinaUtility:
         # 遍历发言记录
         for m in list_cd_counter:
             # 获得当前成员记录
-            if m['uin'] == member.uin:
+            if m['name'] == member.name:
                 # 不在限制内
                 if time.time() - m['time'] > seconds:
                     # 冷却超过 10 分钟，可以响应，更新数据
@@ -135,7 +135,7 @@ class KalinaUtility:
 
         # 未找到当前成员，可以响应，更新数据
         data = dict()
-        data['uin'] = member.uin
+        data['name'] = member.name
         data['time'] = time.time()
         list_cd_counter.append(data)
 
