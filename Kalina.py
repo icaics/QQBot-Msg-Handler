@@ -167,14 +167,14 @@ def morning_call(bot):
         print('[ERROR] GF_TASK_MORNING_CALL: ' + str(e))
 
 
-@qqbotsched(hour='6', minute='55')
+@qqbotsched(hour='7', minute='0')
 def battery(bot):
 
     """ 电池刷新提醒 15:00 , 03:00 不提醒 """
 
     try:
         group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官！各位指挥官！\n好友宿舍电池马上就要刷新啦！\n快去找 10 宿舍 dalao 抱大腿！')
+        bot.SendTo(group, '各位指挥官！各位指挥官！\n好友宿舍电池刷新啦！\n快去找 10 宿舍 dalao 抱大腿！')
     except Exception as e:
         print('[ERROR] GF_TASK_BATTERY: ' + str(e))
 
