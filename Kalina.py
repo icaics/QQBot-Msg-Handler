@@ -155,16 +155,16 @@ def handle_msg(bot, contact, member, message):
     return '@' + member.name + '\n' + Kalina.help
 
 
-@qqbotsched(hour='0', minute='0')
-def morning_call(bot):
-
-    """ 每天早上问候语 """
-
-    try:
-        group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官早上好！\n格林娜可没有摸鱼哦~\n新的一天一起努力吧！')
-    except Exception as e:
-        print('[ERROR] GF_TASK_MORNING_CALL: ' + str(e))
+# @qqbotsched(hour='0', minute='0')
+# def morning_call(bot):
+#
+#     """ 每天早上问候语 """
+#
+#     try:
+#         group = bot.List('group', Kalina.group_name)[0]
+#         bot.SendTo(group, '各位指挥官早上好！\n格林娜可没有摸鱼哦~\n新的一天一起努力吧！')
+#     except Exception as e:
+#         print('[ERROR] GF_TASK_MORNING_CALL: ' + str(e))
 
 
 @qqbotsched(hour='7', minute='0')
