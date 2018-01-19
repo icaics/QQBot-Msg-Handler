@@ -239,8 +239,13 @@ def build_open(bot):
     """ 提醒可以开始建造模拟 """
 
     try:
-        group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n人形和装备可以同时建造了'
-                          '\n建造结果根据「IOP制造公司出货统计」推算\n仅供参考，请指挥官珍惜资源')
+        if Kalina.build_up:
+            group = bot.List('group', Kalina.group_name)[0]
+            bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n人形和装备可以同时建造了'
+                              '\n注意：当前为人形重建 UP 模式\n祝各位指挥官开心')
+        else:
+            group = bot.List('group', Kalina.group_name)[0]
+            bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n人形和装备可以同时建造了'
+                              '\n建造结果根据「IOP制造公司出货统计」推算\n仅供参考，请指挥官珍惜资源')
     except Exception as e:
         print('[ERROR] QQBOT_TASK_BUILD_OPEN: ' + str(e))
