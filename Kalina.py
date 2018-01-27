@@ -108,9 +108,14 @@ def handle_msg(bot, contact, member, message):
         m = m.replace('人型经验', '')
         return KalinaUtility.gf_exp_book(bot, contact, member, m, 0)
 
+    if message.startswith('誓约人形经验') or message.startswith('誓约人型经验'):
+        m = message.replace('誓约人形经验', '')
+        m = m.replace('誓约人型经验', '')
+        return KalinaUtility.gf_exp_book(bot, contact, member, m, 1)
+
     if message.startswith('妖精经验'):
         m = message.replace('妖精经验', '')
-        return KalinaUtility.gf_exp_book(bot, contact, member, m, 1)
+        return KalinaUtility.gf_exp_book(bot, contact, member, m, 2)
 
     if message.endswith('妖精信息') or message.endswith('妖精'):
         m = message.replace('信息', '')
