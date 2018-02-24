@@ -61,7 +61,7 @@ def onQQMessage(bot, contact, member, content):
 
             # 发出欢迎信息并开启计数器
             KalinaCD.WELCOME_COUNTER += 1
-            bot.SendTo(contact, '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下 "狗牌" 也可以哦')
+            bot.SendTo(contact, '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下「狗牌」也可以哦')
 
         # 重置欢迎计数器
         if KalinaCD.WELCOME_COUNTER != 0:
@@ -120,7 +120,7 @@ def handle_msg(bot, contact, member, message):
     if message.endswith('妖精信息') or message.endswith('妖精'):
         m = message.replace('信息', '')
         # 仅处理只含妖精名称的信息
-        if len(m) == 4:
+        if len(m) == 4 or len(m) == 5:
             return KalinaUtility.gf_fairy_info(bot, contact, member, m)
 
     if message.startswith('来一发'):
