@@ -101,7 +101,10 @@ def handle_msg(bot, contact, member, message):
         return '@' + member.name + '\n' + random.sample(Kalina.script_moe, 1)[0]
 
     if message == '查看数据库':
-        return '@' + member.name + '\n' + '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/\n' + '后勤计算器：\n' + 'https://apps.icylogic.net/gftools/'
+        return '@' + member.name + '\n' + \
+               '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/\n' + \
+               '后勤计算器：\n' + 'https://ynntk4815.github.io/gf/main.html\n' + \
+               '阵型模拟器：\n' + 'https://ynntk4815.github.io/gf/main2.html'
 
     if message.startswith('人形经验') or message.startswith('人型经验'):
         m = message.replace('人形经验', '')
