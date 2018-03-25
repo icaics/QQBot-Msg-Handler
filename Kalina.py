@@ -61,7 +61,7 @@ def onQQMessage(bot, contact, member, content):
 
             # 发出欢迎信息并开启计数器
             KalinaCD.WELCOME_COUNTER += 1
-            bot.SendTo(contact, '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下「狗牌」也可以哦')
+            bot.SendTo(contact, Kalina.welcome)
 
         # 重置欢迎计数器
         if KalinaCD.WELCOME_COUNTER != 0:
@@ -101,10 +101,7 @@ def handle_msg(bot, contact, member, message):
         return '@' + member.name + '\n' + random.sample(Kalina.script_moe, 1)[0]
 
     if message == '查看数据库':
-        return '@' + member.name + '\n' + \
-               '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/\n' + \
-               '后勤计算器：\n' + 'https://ynntk4815.github.io/gf/main.html\n' + \
-               '阵型模拟器：\n' + 'https://ynntk4815.github.io/gf/main2.html'
+        return '@' + member.name + '\n' + Kalina.tool_website
 
     if message.startswith('人形经验') or message.startswith('人型经验'):
         m = message.replace('人形经验', '')

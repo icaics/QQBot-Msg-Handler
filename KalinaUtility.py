@@ -47,6 +47,20 @@ class Kalina:
     8.钦点一人〇〇 (30)
 - 发现问题请 @菜菜酱'''
 
+    welcome = '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下「指挥官信息界面」也可以哦'
+
+    tool_website = '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/\n' + \
+                   '阵型模拟器：\n' + 'https://ynntk4815.github.io/gf/main2.html\n' + \
+                   '后勤计算器：\n' + 'https://ynntk4815.github.io/gf/main.html\n' + \
+                   '练级计算器：\n' + 'https://jyying.cn/snqxap/calclevel.html'
+
+    tdoll_build_heavy_keyword_1 = ['重建一级', '重建一档', '重建一挡', '人形重建一级', '人形重建一档', '人形重建一挡']
+    tdoll_build_heavy_keyword_2 = ['重建二级', '重建二档', '重建二挡', '人形重建二级', '人形重建二档', '人形重建二挡']
+    tdoll_build_heavy_keyword_3 = ['重建三级', '重建三档', '重建三挡', '人形重建三级', '人形重建三档', '人形重建三挡']
+
+    build_error = '指挥官！建造姿势错误，资源大破！\n请使用「来一发」加上：\n' \
+                  '普建、手枪建造、冲锋枪建造\n突击步枪建造、步枪建造、机枪建造\n人形、装备重建一二三档'
+
     t_doll_exp = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
                   1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
                   2100, 2200, 2300, 2400, 2500, 2600, 2800, 3100, 3400, 4200,
@@ -219,7 +233,7 @@ class KalinaUtility:
                 data = KalinaUtility.gf_build_calculate(results)
                 return '@' + member.name + '\n' + '使用公式：730, 630, 130, 430' + '\n建造结果：' + data[0] + ' ' + data[1]
 
-            elif message == '重建一级' or message == '重建一档' or message == '重建一挡' or message == '人形重建一级' or message == '人形重建一档' or message == '人形重建一挡':
+            elif message in Kalina.tdoll_build_heavy_keyword_1:
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
@@ -228,7 +242,7 @@ class KalinaUtility:
                 data = KalinaUtility.gf_build_calculate(results)
                 return '@' + member.name + '\n' + '使用公式：6K, 2K, 6K, 4K, 1/3' + '\n建造结果：' + data[0] + ' ' + data[1]
 
-            elif message == '重建二级' or message == '重建二档' or message == '重建二挡' or message == '人形重建二级' or message == '人形重建二档' or message == '人形重建二挡':
+            elif message in Kalina.tdoll_build_heavy_keyword_2:
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
@@ -237,7 +251,7 @@ class KalinaUtility:
                 data = KalinaUtility.gf_build_calculate(results)
                 return '@' + member.name + '\n' + '使用公式：6K, 2K, 6K, 4K, 20/5' + '\n建造结果：' + data[0] + ' ' + data[1]
 
-            elif message == '重建三级' or message == '重建三档' or message == '重建三挡' or message == '人形重建三级' or message == '人形重建三档' or message == '人形重建三挡':
+            elif message in Kalina.tdoll_build_heavy_keyword_3:
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
@@ -275,8 +289,7 @@ class KalinaUtility:
 
             else:
                 # 建造方式错误不触发发言 CD
-                return '@' + member.name + '\n' + '指挥官！建造姿势错误，资源大破！\n请使用「来一发」加上：\n普建、手枪建造、冲锋枪建造\n突击步枪建造、' \
-                                                  '步枪建造、机枪建造\n人形、装备重建一二三档'
+                return '@' + member.name + '\n' + Kalina.build_error
         except Exception as e:
             print('[ERROR] GF_BUILD: ' + str(e))
             return '@' + member.name + '\n' + '人形建造模拟出现错误'
