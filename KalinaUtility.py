@@ -49,10 +49,12 @@ class Kalina:
 
     welcome = '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下「指挥官信息界面」也可以哦'
 
-    tool_website = '指挥官！请查阅「IOP 制造公司出货统计」：\n' + 'http://gfdb.baka.pw/\n' + \
-                   '阵型模拟器：\n' + 'https://ynntk4815.github.io/gf/main2.html\n' + \
-                   '后勤计算器：\n' + 'https://ynntk4815.github.io/gf/main.html\n' + \
-                   '练级计算器：\n' + 'https://jyying.cn/snqxap/calclevel.html'
+    tool_website = '指挥官！请查看\n' + \
+                   '出货：http://gfdb.baka.pw/\n' + \
+                   '阵型：https://ynntk4815.github.io/gf/main2.html\n' + \
+                   '后勤：https://ynntk4815.github.io/gf/main.html\n' + \
+                   '练级：https://jyying.cn/snqxap/calclevel.html\n' \
+                   '敌方：http://underseaworld.net/gf/'
 
     tdoll_build_heavy_keyword_1 = ['重建一级', '重建一档', '重建一挡', '人形重建一级', '人形重建一档', '人形重建一挡']
     tdoll_build_heavy_keyword_2 = ['重建二级', '重建二档', '重建二挡', '人形重建二级', '人形重建二档', '人形重建二挡']
