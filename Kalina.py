@@ -6,6 +6,7 @@ from Define import Utility
 from KalinaUtility import KalinaUtility
 # from KalinaWBMonitor import WeiboMonitor
 import KalinaCD
+import KalinaData
 
 from qqbot import qqbotsched
 import random
@@ -98,7 +99,7 @@ def handle_msg(bot, contact, member, message):
 
     # 处理空消息
     if len(message) == 0:
-        return '@' + member.name + '\n' + random.sample(Kalina.script_moe, 1)[0]
+        return '@' + member.name + '\n' + random.sample(KalinaData.script_moe, 1)[0]
 
     if message == '查看数据库':
         return '@' + member.name + '\n' + Kalina.tool_website
@@ -120,7 +121,7 @@ def handle_msg(bot, contact, member, message):
     if message.endswith('妖精信息') or message.endswith('妖精'):
         m = message.replace('信息', '')
         # 仅处理只含妖精名称的信息
-        if len(m) == 4 or len(m) == 5:
+        if len(m) == 4 or len(m) == 5 or len(m) == 6 or len(m) == 9:
             return KalinaUtility.gf_fairy_info(bot, contact, member, m)
 
     if message.startswith('来一发'):
@@ -131,6 +132,13 @@ def handle_msg(bot, contact, member, message):
         if time.strftime('%H') != '22':
             return '@' + member.name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放哦'
         return KalinaUtility.gf_build(bot, contact, member, message.replace('来一发', ''))
+
+    if message.startswith('随机组队'):
+        # 此功能需要参与发言 CD 计算
+        if not KalinaUtility.kalina_can_reply(member, KalinaCD.RANDOM_GROUP_CD, 3600):
+            return ''
+        # 随机组队
+        return KalinaUtility.gf_random_group(bot, contact, member, message)
 
     if message.startswith('roll') or message.startswith('Roll') or message.startswith('ROLL'):
         # 活动期间离线
