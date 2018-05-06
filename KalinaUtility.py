@@ -49,7 +49,7 @@ class Kalina:
     8.ROLL (10)
     9.钦点一人〇〇 (30)'''
 
-    welcome = '欢迎新 dalao\n请改群名片为「游戏昵称 + UID」\n还要记得看一下置顶公告\n晒一下「指挥官信息界面」也可以哦'
+    welcome = '欢迎新 dalao\n1、请改群名片为「游戏昵称 + UID」\n2、置顶公告「本群须知」一定看一下\n3、萌新可以发 UID 互加好友\n4、禁贴仓库队伍图鉴，萌新可先文字提问后找群内 dalao 私聊贴图'
 
     tool_website = '指挥官！请查看\n' + \
                    '出货：http://gfdb.baka.pw/\n' + \
