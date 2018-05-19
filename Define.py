@@ -7,6 +7,8 @@ import datetime
 import requests
 import urllib.parse
 
+import KalinaData
+
 
 class Global:
 
@@ -133,6 +135,12 @@ class Utility:
         """ 钦点一人 """
 
         try:
+
+            # 违禁词检测
+            for keyword in KalinaData.ban_word:
+                if keyword in message:
+                    return ''
+
             # 获得当前群组对象
             group = bot.List('group', group_name)[0]
             # 获得群组内成员
