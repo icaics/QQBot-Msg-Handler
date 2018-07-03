@@ -56,7 +56,8 @@ class Kalina:
                    '阵型：https://ynntk4815.github.io/gf/main2.html\n' + \
                    '后勤：https://ynntk4815.github.io/gf/main.html\n' + \
                    '练级：https://jyying.cn/snqxap/calclevel.html\n' \
-                   '敌方：http://underseaworld.net/gf/'
+                   '敌方：http://underseaworld.net/gf\n' \
+                   '资料库：https://gf.fws.tw/db/guns/alist'
 
     tdoll_build_heavy_keyword_1 = ['重建一级', '重建一档', '重建一挡', '人形重建一级', '人形重建一档', '人形重建一挡']
     tdoll_build_heavy_keyword_2 = ['重建二级', '重建二档', '重建二挡', '人形重建二级', '人形重建二档', '人形重建二挡']
