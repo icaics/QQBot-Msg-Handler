@@ -1,0 +1,8 @@
+# 忽略 Pycharm 配置文件
+.idea
+
+# 忽略配置文件目录
+/config
+
+# 忽略运行缓存文件
+/plugins/__pycache__

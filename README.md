@@ -8,11 +8,12 @@
 
 >1. Make **workspace** `mkdir /docker`
 >2. Clone repo to **workspace**
+>3. Enter repo `cd qqbot-gf-kalina`
 
 * Docker
 
 >1. Get docker python:3.5: `docker pull python:3.5`
->2. Use **Dockerfile** build image named **qqbot**: `docker built -t qqbot-gf-kalina .`
+>2. Use **Dockerfile** build image named **qqbot**: `docker build -t qqbot-gf-kalina .`
 
 * WorkDir
 
