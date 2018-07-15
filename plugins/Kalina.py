@@ -129,7 +129,7 @@ def handle_msg(bot, contact, member, message):
         if Kalina.during_event:
             return '@' + member.name + '\n' + Kalina.during_event_tip
         # 只在指定时间段内允许建造
-        if time.strftime('%H') != '22':
+        if time.strftime('%H') != '14':
             return '@' + member.name + '\n' + '指挥官！建造模拟只在 22 - 23 点之间开放哦'
         return KalinaUtility.gf_build(bot, contact, member, message.replace('来一发', ''))
 
