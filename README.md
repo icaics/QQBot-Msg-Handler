@@ -13,16 +13,22 @@
 * Docker
 
 >1. Get docker python:3.5: `docker pull python:3.5`
->2. Use **Dockerfile** build image named **qqbot**: `docker build -t qqbot-gf-kalina .`
+>2. Use **Dockerfile** build image named **qqbot-gf-kalina**: `docker build -t qqbot-gf-kalina .`
+>3. Pay attention to the `.` in setp 2
 
-* WorkDir
+* Config File
 
 >1. Make folder **config** for qqbot config file: `mkdir config`
 >2. Put ``v2.3.conf`` into **config** folder
+>3. Prepare config file **BEFORE** run `./startup.sh`
 
 * Run
 
->User `./startup.sh` to RUN QQBot
+>Run `./startup.sh` to **RUN QQBot**
+
+* Update
+
+>Run `./update.sh` to **update**
 
 ## Instructions for v2.3.conf
 
