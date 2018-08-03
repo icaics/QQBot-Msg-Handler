@@ -53,13 +53,13 @@ class Kalina:
 
     repeater = '检测到群内复读机行为！\n请注意节制，保持群内正常交流\n否则有几率受到管理制裁！'
 
-    tool_website = '指挥官！请查看\n' + \
-                   '出货：http://gfdb.baka.pw/\n' + \
+    tool_website = '出货：http://gfdb.baka.pw/\n' + \
                    '阵型：https://ynntk4815.github.io/gf/main2.html\n' + \
                    '后勤：https://ynntk4815.github.io/gf/main.html\n' + \
                    '练级：https://jyying.cn/snqxap/calclevel.html\n' \
                    '敌方：http://underseaworld.net/gf\n' \
-                   '资料库：https://gf.fws.tw/db/guns/alist'
+                   '资料：https://gf.fws.tw/db/guns/alist\n' \
+                   '剧情：https://icaics.github.io/gf_timeline'
 
     tdoll_build_heavy_keyword_1 = ['重建一级', '重建一档', '重建一挡', '人形重建一级', '人形重建一档', '人形重建一挡']
     tdoll_build_heavy_keyword_2 = ['重建二级', '重建二档', '重建二挡', '人形重建二级', '人形重建二档', '人形重建二挡']
