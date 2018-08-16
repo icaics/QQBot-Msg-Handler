@@ -200,7 +200,7 @@ def maintenance(bot):
 
     try:
         group = bot.List('group', Kalina.group_name)[0]
-        bot.SendTo(group, '各位指挥官！各位指挥官！\n10:00 就是例行维护的时间了，\n记得安排好后勤，同时注意模拟点数不要溢出！\n谎报开服会受到管理制裁！')
+        bot.SendTo(group, '各位指挥官！各位指挥官！\n10:00 就是例行维护的时间了，\n记得安排好后勤，同时注意样本解析进度、模拟点数不要溢出！\n谎报开服会受到管理制裁！')
     except Exception as e:
         print('[ERROR] GF_TASK_MAINTENANCE: ' + str(e))
 
