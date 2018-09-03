@@ -119,6 +119,10 @@ def handle_msg(bot, contact, member, message):
         m = message.replace('妖精经验', '')
         return KalinaUtility.gf_exp_book(bot, contact, member, m, 2)
 
+    if message.startswith('重装部队经验'):
+        m = message.replace('重装部队经验', '')
+        return KalinaUtility.gf_exp_book(bot, contact, member, m, 3)
+
     if message.endswith('妖精信息') or message.endswith('妖精'):
         m = message.replace('信息', '')
         # 仅处理只含妖精名称的信息

@@ -30,9 +30,9 @@ class Kalina:
     help_event = '''- 发送「格林娜格林娜」加命令使用对应功能
     1.查看数据库
     2.(誓约)人形经验 a-b
-    3.妖精经验 a-b
+    3.妖精/重装部队经验 a-b
     4.〇〇妖精
-    5.随机组队（60）
+    5.随机组队
     6.活动期间离线
     7.活动期间离线
     8.活动期间离线
@@ -41,13 +41,13 @@ class Kalina:
     help = '''- 发送「格林娜格林娜」加命令使用对应功能
     1.查看数据库
     2.(誓约)人形经验 a-b
-    3.妖精经验 a-b
+    3.妖精/重装部队经验 a-b
     4.〇〇妖精
-    5.随机组队（60）
-    6.来一发普建/枪种建造 (10)
-    7.来一发人形/装备重建〇档 (10)
-    8.ROLL (10)
-    9.钦点一人〇〇 (30)'''
+    5.随机组队
+    6.来一发普建/枪种建造
+    7.来一发人形/装备重建〇档
+    8.ROLL
+    9.钦点一人〇〇'''
 
     welcome = '欢迎新 dalao\n1、请改群名片为「游戏昵称 + UID」\n2、置顶公告「本群须知」一定看一下\n3、好友需求可查看群内【好友征集】投票自取\n4、萌新玩家若有疑惑请提问在先，避免贸然上图'
 
@@ -253,13 +253,14 @@ class KalinaUtility:
     @staticmethod
     def gf_exp_book(bot, contact, member, message, cal_type):
 
-        """ 计算人形 / 妖精所需经验书数量 """
+        """ 计算人形 / 妖精 / 重装小队 所需经验书数量 """
 
         try:
             message = str(message)
 
-            data = [KalinaData.t_doll_exp, KalinaData.t_doll_exp_oath, KalinaData.fairy_exp]
-            name = ['人形', '誓约人形', '妖精']
+            data = [KalinaData.t_doll_exp, KalinaData.t_doll_exp_oath, KalinaData.fairy_exp, KalinaData.squad_exp]
+            name = ['人形', '誓约人形', '妖精', '重装部队']
+            book = ['经验书', '经验书', '经验书', '特种经验书']
 
             # 如果无参数
             if len(message) == 0:
@@ -281,7 +282,7 @@ class KalinaUtility:
                 # 排除不合法参数
                 if (cal_type == 0 or cal_type == 1) and (a < 1 or b < 2 or a > 119 or b > 120 or a >= b):
                     return result
-                if cal_type == 2 and (a < 1 or b < 2 or a > 99 or b > 100 or a >= b):
+                if (cal_type == 2 or cal_type == 3) and (a < 1 or b < 2 or a > 99 or b > 100 or a >= b):
                     return result
 
                 # 计算
@@ -289,7 +290,7 @@ class KalinaUtility:
                 books = math.ceil(exp / 3000)
 
                 result = '@' + member.name + '\n' + '指挥官！' + name[cal_type] + '从 ' + str(a) + '-' + str(b) + ' 级\n' + \
-                         '共需要经验 ' + str(exp) + ' \n共需要经验书 ' + str(books) + ' 本'
+                         '共需要经验 ' + str(exp) + ' \n共需要' + book[cal_type] + ' ' + str(books) + ' 本'
 
             return result
 
