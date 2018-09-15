@@ -14,7 +14,7 @@ import operator
 
 class Kalina:
 
-    during_event = True
+    during_event = False
     during_event_tip = '指挥官！活动期间功能离线，请专心攻略活动'
 
     build_up = False
