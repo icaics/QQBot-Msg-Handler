@@ -133,7 +133,7 @@ class KalinaUtility:
 
         # 遍历建造几率数据库
         for data in results:
-            rate += float(data[3]) * 1000
+            rate += float(data[2]) * 1000
             if rand < rate:
                 # 符合当前概率
                 return data
