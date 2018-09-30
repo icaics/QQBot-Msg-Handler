@@ -17,7 +17,7 @@ class Kalina:
     during_event = False
     during_event_tip = '指挥官！活动期间功能离线，请专心攻略活动'
 
-    build_up = False
+    build_up = True
 
     group_name = '少女前线-水果茶水间'
     group_nickname = '后勤官格林娜'
@@ -35,8 +35,7 @@ class Kalina:
     5.随机组队
     6.活动期间离线
     7.活动期间离线
-    8.活动期间离线
-    9.活动期间离线'''
+    8.活动期间离线'''
 
     help = '''- 发送「格林娜格林娜」加命令使用对应功能
     1.查看数据库
@@ -44,10 +43,9 @@ class Kalina:
     3.妖精/重装部队经验 a-b
     4.〇〇妖精
     5.随机组队
-    6.来一发普建/枪种建造
-    7.来一发人形/装备重建〇档
-    8.ROLL
-    9.钦点一人〇〇'''
+    6.来一发人形/装备重建
+    7.ROLL
+    8.钦点一人〇〇'''
 
     welcome = '欢迎新 dalao\n1、请改群名片为「游戏昵称 + UID」\n2、置顶公告「本群须知」一定看一下\n3、好友需求可查看群内【好友征集】投票自取\n4、萌新玩家若有疑惑请提问在先，避免贸然上图'
 
@@ -61,12 +59,7 @@ class Kalina:
                    '资料：https://gf.fws.tw/db/guns/alist\n' \
                    '剧情：https://icaics.github.io/gf_timeline'
 
-    tdoll_build_heavy_keyword_1 = ['重建一级', '重建一档', '重建一挡', '人形重建一级', '人形重建一档', '人形重建一挡']
-    tdoll_build_heavy_keyword_2 = ['重建二级', '重建二档', '重建二挡', '人形重建二级', '人形重建二档', '人形重建二挡']
-    tdoll_build_heavy_keyword_3 = ['重建三级', '重建三档', '重建三挡', '人形重建三级', '人形重建三档', '人形重建三挡']
-
-    build_error = '指挥官！建造姿势错误，资源大破！\n请使用「来一发」加上：\n' \
-                  '普建、手枪建造、冲锋枪建造\n突击步枪建造、步枪建造、机枪建造\n人形、装备重建一二三档'
+    build_error = '指挥官！建造姿势错误，资源大破！\n请使用「来一发人形重建」或\n「来一发装备重建」尝试'
 
 
 class KalinaUtility:
@@ -102,119 +95,31 @@ class KalinaUtility:
         """ 人形建造模拟 """
 
         try:
-            if message == '普建':
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
-                    return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_4442.json')
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：430, 430, 430, 230' + '\n建造结果：' + data[0] + ' ' + data[1]
+            build_up_message = '\n当前为模拟建造 UP 活动期间，祝您建造愉快' if Kalina.build_up else ''
 
-            elif message == '手枪建造':
+            if message == '人形重建':
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
                     return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_1111.json')
+                results = Utility.load_json(KalinaUtility.get_datebase_path() + 'gf_build_6264_2.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：130, 130, 130, 130' + '\n建造结果：' + data[0] + ' ' + data[1]
+                return '@' + member.name + '\n模拟建造结果：\n' + data[0] + ' ' + data[1] + build_up_message
 
-            elif message == '冲锋枪建造':
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
-                    return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_4412.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：430, 430, 130, 230' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message == '突击步枪建造':
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
-                    return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_1442.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：130, 430, 430, 230' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message == '步枪建造':
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
-                    return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_4142.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：430, 130, 430, 230' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message == '机枪建造':
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
-                    return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_c_7614.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：730, 630, 130, 430' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message in Kalina.tdoll_build_heavy_keyword_1:
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
-                    return ''
-                results = Utility.load_json(KalinaUtility.get_datebase_path() + 'gf_b_c_6264_1.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：6K, 2K, 6K, 4K, 1/3' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message in Kalina.tdoll_build_heavy_keyword_2:
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
-                    return ''
-                results = Utility.load_json(KalinaUtility.get_datebase_path() + 'gf_b_c_6264_2.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：6K, 2K, 6K, 4K, 20/5' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message in Kalina.tdoll_build_heavy_keyword_3:
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_T_DOLL_CD, 600):
-                    return ''
-                results = Utility.load_json(KalinaUtility.get_datebase_path() + 'gf_b_c_6264_3.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：6K, 2K, 6K, 4K, 50/10' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message == '装备重建一级' or message == '装备重建一档' or message == '装备重建一挡':
+            elif message == '装备重建':
                 # 此功能需要参与发言 CD 计算
                 if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
                     return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_e_2222_1.json')
+                results = Utility.load_json(Global.database_path + 'gf_build_2222_2.json')
                 # 建造
                 data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 2K5, 1/2' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message == '装备重建二级' or message == '装备重建二档' or message == '装备重建二挡':
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
-                    return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_e_2222_2.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 2K5, 20/4' + '\n建造结果：' + data[0] + ' ' + data[1]
-
-            elif message == '装备重建三级' or message == '装备重建三档' or message == '装备重建三挡':
-                # 此功能需要参与发言 CD 计算
-                if not KalinaUtility.kalina_can_reply(member, KalinaCD.BUILD_EQUIP_CD, 600):
-                    return ''
-                results = Utility.load_json(Global.database_path + 'gf_b_e_2222_3.json')
-                # 建造
-                data = KalinaUtility.gf_build_calculate(results)
-                return '@' + member.name + '\n' + '使用公式：2K5, 2K5, 2K5, 2K5, 50/6' + '\n建造结果：' + data[0] + ' ' + data[1]
-
+                return '@' + member.name + '\n模拟建造结果：\n' + data[0] + ' ' + data[1] + build_up_message
             else:
                 # 建造方式错误不触发发言 CD
                 return '@' + member.name + '\n' + Kalina.build_error
         except Exception as e:
             print('[ERROR] GF_BUILD: ' + str(e))
-            return '@' + member.name + '\n' + '人形建造模拟出现错误'
+            return '@' + member.name + '\n' + '模拟建造出现错误'
 
     @staticmethod
     def gf_build_calculate(results):
