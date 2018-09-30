@@ -262,7 +262,7 @@ def build_open(bot):
         if Kalina.build_up:
             group = bot.List('group', Kalina.group_name)[0]
             bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n人形和装备可以同时建造了'
-                              '\n注意：当前为人形重建 UP 模式\n祝各位指挥官开心')
+                              '\n注意：当前为模拟建造 UP 模式\n祝各位指挥官建造愉快')
         else:
             group = bot.List('group', Kalina.group_name)[0]
             bot.SendTo(group, '各位指挥官！各位指挥官！\n模拟建造已开放，持续到 23:00！\n人形和装备可以同时建造了'

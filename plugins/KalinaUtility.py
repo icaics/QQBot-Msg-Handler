@@ -95,7 +95,7 @@ class KalinaUtility:
         """ 人形建造模拟 """
 
         try:
-            build_up_message = '\n当前为模拟建造 UP 活动期间，祝您建造愉快' if Kalina.build_up else ''
+            build_up_message = '\n当前为模拟建造 UP 模式，祝您建造愉快' if Kalina.build_up else ''
 
             if message == '人形重建':
                 # 此功能需要参与发言 CD 计算
