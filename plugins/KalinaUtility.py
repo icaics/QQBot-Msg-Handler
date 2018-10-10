@@ -17,7 +17,7 @@ class Kalina:
     during_event = False
     during_event_tip = '指挥官！活动期间功能离线，请专心攻略活动'
 
-    build_up = True
+    build_up = False
 
     group_name = '少女前线-水果茶水间'
     group_nickname = '后勤官格林娜'
